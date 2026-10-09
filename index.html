@@ -5,6 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المعلم الذكي - المناهج المصرية</title>
 
+    <!-- إعدادات تطبيق الويب (PWA) للتحميل والتحويل لتطبيق -->
+    <meta name="theme-color" content="#10b981">
+    <script>
+        // حقن ملف الmanifest تلقائياً ليعمل التطبيق بدون الحاجة لملف خارجي منفصل
+        const manifestData = {
+            "name": "المعلم الذكي - Smart Teacher",
+            "short_name": "Smart Teacher",
+            "start_url": window.location.href,
+            "display": "standalone",
+            "background_color": "#0f172a",
+            "theme_color": "#10b981",
+            "icons": [
+                {
+                    "src": "https://cdn-icons-png.flaticon.com/512/3413/3413535.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                },
+                {
+                    "src": "https://cdn-icons-png.flaticon.com/512/3413/3413535.png",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
+        };
+        const stringManifest = JSON.stringify(manifestData);
+        const blob = new Blob([stringManifest], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(blob);
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = manifestURL;
+        document.head.appendChild(link);
+    </script>
+
     <!-- Puter AI -->
     <script src="https://js.puter.com/v2/"></script>
 
@@ -164,6 +197,28 @@
             font-size: 14px;
             padding: 12px;
             border-radius: 14px;
+        }
+
+        /* زر تحميل التطبيق الاحترافي */
+        .btn-install {
+            color: white;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            font-size: 13px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(6, 182, 212, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
         }
 
         .full {
@@ -804,8 +859,15 @@
 <div class="app">
     <!-- شاشة الترحيب الأساسية -->
     <section id="welcomeScreen" class="screen active">
-        <div class="welcome-box">
-            <div class="logo">🎓</div>
+        <div class="welcome-box" style="position: relative;">
+            <!-- زر تثبيت التطبيق في شاشة الترحيب أيضاً -->
+            <div style="position: absolute; top: -10px; left: 0; right: 0; display: flex; justify-content: center;">
+                <button id="installWelcomeBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">
+                    📥 تحميل تطبيق Smart Teacher
+                </button>
+            </div>
+
+            <div class="logo" style="margin-top: 30px;">🎓</div>
             <div class="welcome-title">المعلم الذكي</div>
             <p class="welcome-description">
                 مساعدك الذكي للمناهج المصرية الحديثة<br>اسأل، صوّر السؤال، اكسب نقاطاً وأوسمة، واستمتع بالمذاكرة.
@@ -819,7 +881,13 @@
     <section id="selectionScreen" class="screen">
         <div class="selection-box">
             <div class="selection-header">
-                <button id="mainBackBtn" class="btn btn-secondary back-btn" onclick="handleBack()">⬅️ رجوع للخلف</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <button id="mainBackBtn" class="btn btn-secondary back-btn" onclick="handleBack()" style="margin-bottom: 0;">⬅️ رجوع للخلف</button>
+                    <!-- زر تثبيت التطبيق هنا أيضاً -->
+                    <button id="installSelectionBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">
+                        📥 تحميل تطبيق Smart Teacher
+                    </button>
+                </div>
                 
                 <div class="stepper">
                     <div id="step1Indicator" class="step-item active">
@@ -930,6 +998,10 @@
                 </div>
 
                 <div class="header-actions">
+                    <!-- زر تثبيت التطبيق في الهيدر العلوي للشات أيضاً -->
+                    <button id="installChatBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">
+                        📥 تحميل التطبيق
+                    </button>
                     <button class="btn btn-quiz" onclick="generateQuiz()">🎲 اختبار</button>
                     <button class="btn btn-secondary" onclick="toggleDropdown()">⋮</button>
                 </div>
@@ -1032,6 +1104,41 @@
     var notes = [];
     var askedQuestionsCount = 0;
     var userPoints = 0;
+
+    // متغيرات تثبيت التطبيق (PWA Install Prompt)
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // إظهار جميع أزرار التحميل المتاحة في الشاشات المختلفة
+        showInstallButtons(true);
+    });
+
+    function showInstallButtons(show) {
+        const displayVal = show ? 'inline-flex' : 'none';
+        const wBtn = document.getElementById('installWelcomeBtn');
+        const sBtn = document.getElementById('installSelectionBtn');
+        const cBtn = document.getElementById('installChatBtn');
+        if(wBtn) wBtn.style.display = displayVal;
+        if(sBtn) sBtn.style.display = displayVal;
+        if(cBtn) cBtn.style.display = displayVal;
+    }
+
+    async function triggerInstall() {
+        if (!deferredPrompt) {
+            alert('التطبيق جاهز بالفعل أو أن متصفحك لا يدعم التثبيت المباشر حالياً.');
+            return;
+        }
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            console.log('تم قبول تثبيت التطبيق Smart Teacher');
+            showInstallButtons(false);
+        }
+        deferredPrompt = null;
+    }
+    window.triggerInstall = triggerInstall;
 
     window.onload = function() {
         loadSavedData();
