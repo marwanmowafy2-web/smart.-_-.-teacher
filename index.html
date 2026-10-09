@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M7WLDBWXWK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-M7WLDBWXWK');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المعلم الذكي - المناهج المصرية</title>
@@ -206,7 +216,6 @@
         <div class="bg-blob-2"></div>
 
         <div class="welcome-box">
-            <!-- زر التثبيت يظهر فقط في المتصفح العادي -->
             <div style="margin-bottom: 12px;">
                 <button id="installWelcomeBtn" class="btn-install" onclick="triggerInstall()">📥 تثبيت تطبيق المعلم الذكي</button>
             </div>
@@ -242,7 +251,6 @@
             <div class="selection-header">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <button id="mainBackBtn" class="btn btn-secondary back-btn" onclick="handleBack()" style="margin-bottom: 0;">⬅️ رجوع للخلف</button>
-                    <!-- زر تثبيت إضافي يظهر في المتصفح فقط -->
                     <button id="installSelectionBtn" class="btn-install" onclick="triggerInstall()" style="margin-bottom: 0; padding: 6px 10px; font-size: 11px;">📥 تثبيت</button>
                 </div>
                 
@@ -299,7 +307,6 @@
                 </div>
 
                 <div class="header-actions">
-                    <!-- زر تثبيت داخل الشات يظهر في المتصفح فقط -->
                     <button id="installChatBtn" class="btn-install" onclick="triggerInstall()" style="margin-bottom: 0; padding: 6px 10px; font-size: 11px;">📥 تثبيت</button>
                     <button class="btn btn-quiz" onclick="generateQuiz()">🎲 اختبار</button>
                     <button class="btn btn-secondary" onclick="toggleDropdown()">⋮</button>
@@ -385,20 +392,18 @@
     var timerInterval = null, timeLeft = 25 * 60, isTimerRunning = false, notes = [], askedQuestionsCount = 0, userPoints = 0;
     let deferredPrompt = null;
 
-    // التحقق مما إذا كان التطبيق يعمل في المتصفح العادي أم كتطبيق مثبت
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        // إظهار أزرار التثبيت فقط إذا لم يكن التطبيق مثبتاً بالفعل
         if (!isStandalone) {
             showInstallButtons(true);
         }
     });
 
     function showInstallButtons(show) {
-        if (isStandalone) return; // لا تقم بإظهار الأزرار أبداً إذا كان مثبتاً
+        if (isStandalone) return;
         const val = show ? 'inline-flex' : 'none';
         ['installWelcomeBtn', 'installSelectionBtn', 'installChatBtn'].forEach(id => {
             const el = document.getElementById(id);
@@ -419,7 +424,6 @@
 
     window.onload = function() {
         loadSavedData();
-        // إذا كان التطبيق مفتوحاً كموقع ويب، نظهر أزرار التثبيت فوراً للمستخدم
         if (!isStandalone) {
             showInstallButtons(true);
         }
@@ -824,4 +828,3 @@
 </script>
 </body>
 </html>
- 
