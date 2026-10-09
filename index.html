@@ -269,7 +269,7 @@
                 <div class="option-grid">
                     <button class="option" onclick="selectStage('ابتدائي')"><div class="option-icon">🧒</div><div class="option-content"><span class="option-title">المرحلة الابتدائية</span><span class="option-tag">تأسيس ومناهج مبسطة 📖</span></div></button>
                     <button class="option" onclick="selectStage('إعدادي')"><div class="option-icon">📘</div><div class="option-content"><span class="option-title">المرحلة الإعدادية</span><span class="option-tag">تطوير الفهم العلمي 🧠</span></div></button>
-                    <button class="option" onclick="selectStage('ثانوي')"><div class="option-icon">🎓</div><div class="option-content"><span class="option-title">المرحلة الثانوية</span><span class="option-tag">نظام حديث وتدريب متقدم 🔬</span></div></button>
+                    <button class="option" onclick="selectStage('ثانوي')"><div class="option-icon">🎓</div><div class="option-content"><span class="option-title">المرحلة الثانوية</span><span class="option-tag">نظام حديث وجميع المواد 🔬</span></div></button>
                 </div>
             </div>
 
@@ -417,7 +417,6 @@
             const { outcome } = await deferredPrompt.userChoice;
             if (outcome === 'accepted') {
                 showInstallButtons(false);
-                // تتبع عملية التثبيت في Google Analytics
                 if (typeof gtag === 'function') {
                     gtag('event', 'app_install', {
                         'event_category': 'Engagement',
@@ -525,7 +524,9 @@
     function selectTrack(track) { selectedTrack = track; showSubjects(); setStep(4); }
 
     function showSubjects() {
-        const grid = document.getElementById("subjectOptions"); grid.innerHTML = [];
+        const grid = document.getElementById("subjectOptions"); grid.innerHTML = "";
+        
+        // القوائم المحدثة بالكامل لكل المراحل والصفوف بما فيها الصف الأول الثانوي بالمواد الجديدة
         const subs = selectedStage === "ابتدائي" ? ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "العلوم", "الدراسات الاجتماعية", "التربية الإسلامية", "التربية المسيحية"] :
                      selectedStage === "إعدادي" ? ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "العلوم", "الدراسات الاجتماعية", "اللغة الفرنسية", "التربية الإسلامية", "التربية المسيحية"] :
                      selectedGrade.includes("الأول") ? ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "علوم متكاملة", "التاريخ", "الفلسفة", "اللغة الفرنسية", "اللغة الألمانية", "التربية الإسلامية", "التربية المسيحية", "البرمجة"] :
