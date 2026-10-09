@@ -1067,6 +1067,18 @@
     };
 
     function startApp() {
+        // التحقق مما إذا كان المستخدم مسجلاً مسبقاً في Puter لتجنب تكرار نافذة تسجيل الدخول
+        try {
+            if (typeof puter !== 'undefined' && puter.auth && puter.auth.isSignedIn()) {
+                showScreen("selectionScreen");
+                setStep(1);
+                return;
+            }
+        } catch (e) {
+            console.error("Auth check error:", e);
+        }
+        
+        // إذا لم يكن مسجلاً، تظهر له شاشة الاختيار بين تسجيل الدخول أو التخطي مرة واحدة
         showScreen("authScreen");
     }
     window.startApp = startApp;
