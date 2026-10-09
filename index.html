@@ -1067,19 +1067,17 @@
     };
 
     function startApp() {
-        // التحقق مما إذا كان المستخدم مسجلاً مسبقاً في Puter لتجنب تكرار نافذة تسجيل الدخول
-        try {
-            if (typeof puter !== 'undefined' && puter.auth && puter.auth.isSignedIn()) {
-                showScreen("selectionScreen");
-                setStep(1);
-                return;
-            }
-        } catch (e) {
-            console.error("Auth check error:", e);
-        }
+        // فحص ما إذا كان المستخدم قد ظهرت له شاشة المصادقة من قبل أو قام بتخطيها
+        var hasSeenAuth = localStorage.getItem("smart_teacher_auth_seen");
         
-        // إذا لم يكن مسجلاً، تظهر له شاشة الاختيار بين تسجيل الدخول أو التخطي مرة واحدة
-        showScreen("authScreen");
+        if (hasSeenAuth === "true") {
+            // إذا ظهرت مسبقاً، انتقل مباشرة لصفحة الاختيار بدون إظهارها مرة أخرى
+            showScreen("selectionScreen");
+            setStep(1);
+        } else {
+            // أول مرة فقط، تظهر شاشة الاختيار (تسجيل الدخول أو التخطي)
+            showScreen("authScreen");
+        }
     }
     window.startApp = startApp;
 
@@ -1091,12 +1089,16 @@
         } catch (e) {
             console.error("Auth error:", e);
         }
+        // حفظ العلامة لتجنب ظهور الشاشة مرة أخرى
+        localStorage.setItem("smart_teacher_auth_seen", "true");
         showScreen("selectionScreen");
         setStep(1);
     }
     window.doSignIn = doSignIn;
 
     function skipSignIn() {
+        // حفظ العلامة لتجنب ظهور الشاشة مرة أخرى عند التخطي أيضاً
+        localStorage.setItem("smart_teacher_auth_seen", "true");
         showScreen("selectionScreen");
         setStep(1);
     }
