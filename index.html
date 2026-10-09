@@ -649,7 +649,7 @@
             max-width: min(850px, 90%);
             border-radius: 18px;
             padding: 14px 18px;
-            line-height: 1.85;
+            line-height: 2;
             font-size: 15px;
             overflow-wrap: anywhere;
             position: relative;
@@ -666,6 +666,34 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-bottom-right-radius: 4px;
+        }
+
+        /* تعديلات تنسيق الفقرات والنقاط في ردود الذكاء الاصطناعي لمنع التشابك */
+        .ai .bubble p {
+            margin-bottom: 12px;
+            line-height: 2.1;
+        }
+
+        .ai .bubble ul, .ai .bubble ol {
+            margin-right: 20px;
+            margin-bottom: 12px;
+        }
+
+        .ai .bubble li {
+            margin-bottom: 8px;
+            line-height: 1.9;
+        }
+
+        /* تنسيق خاص للأرقام أو الاختيارات أو الخطوات لتظهر في سطور مستقلة ومنظمة */
+        .ai .bubble strong {
+            display: inline-block;
+            margin-top: 6px;
+            color: #38bdf8;
+        }
+
+        /* تحويل الخطوات المرقمة (مثل 1. و 2. أو أ، ب، ج) إلى كتل مريحة ومنظمة بمسافات */
+        .ai .bubble p strong + *, .ai .bubble li strong {
+            display: inline-block;
         }
 
         .msg-actions {
@@ -1365,12 +1393,12 @@
     window.backToSelection = backToSelection;
 
     function buildSystemPrompt() {
-        return "أنت \"المعلم الذكي\"، مساعد تعليمي للمناهج المصرية الحديثة. بيانات الطالب: المرحلة: " + selectedStage + "، الصف: " + selectedGrade + "، الشعبة: " + (selectedTrack || "غير محددة") + "، المادة: " + selectedSubject + ". تنبيه هام جداً: يجب أن تكون جميع الردود والشروحات والحلول باللغة العربية حصراً وبشكل كامل. ممنوع تماماً تقديم أي رد باللغة الإنجليزية أو إجراء ترجمة تلقائية للنصوص. أجب دائماً بالعربية الفصحى البسيطة والواضحة.";
+        return "أنت \"المعلم الذكي\"، مساعد تعليمي للمناهج المصرية الحديثة. بيانات الطالب: المرحلة: " + selectedStage + "، الصف: " + selectedGrade + "، الشعبة: " + (selectedTrack || "غير محددة") + "، المادة: " + selectedSubject + ". تنبيه هام جداً: يجب أن تكون جميع الردود والشروحات والحلول باللغة العربية حصراً وبشكل كامل. ممنوع تماماً تقديم أي رد باللغة الإنجليزية أو إجراء ترجمة تلقائية للنصوص. أجب دائماً بالعربية الفصحى البسيطة والواضحة مع تنسيق كل خطوة والاختيارات في أسطر منفصلة وواضحة.";
     }
 
     async function generateQuiz() {
         if (isSending) return;
-        var quizPrompt = "اكتب اختباراً سريعاً مكوناً من 3 أسئلة اختيار من متعدد في مادة " + selectedSubject + " للصف " + selectedGrade + " باللغة العربية. ضع الخيارات بشكل واضح ولا تدون الإجابات النموذجية إلا بعد أن يكتمل الاختيار.";
+        var quizPrompt = "اكتب اختباراً سريعاً مكوناً من 3 أسئلة اختيار من متعدد في مادة " + selectedSubject + " للصف " + selectedGrade + " باللغة العربية. اجعل كل خيار (أ، ب، ج، د) في سطر مستقل وواضح. ضع الخيارات بشكل منظم ولا تدون الإجابات النموذجية إلا بعد أن يكتمل الاختيار.";
         var input = document.getElementById("messageInput");
         input.value = quizPrompt;
         addPoints(5);
@@ -1727,7 +1755,7 @@
         document.getElementById("questionCount").textContent = askedQuestionsCount;
         addPoints(3);
 
-        var userText = (text || "حلل الصورة واشرح لي السؤال.") + " (يرجى الرد وشرح كل شيء باللغة العربية فقط ودون أي ترجمة إنجليزية)";
+        var userText = (text || "حلل الصورة واشرح لي السؤال.") + " (يرجى الرد وشرح كل خطوة وترك كل اختيار في سطر مستقل باللغة العربية فقط ودون أي ترجمة إنجليزية)";
         input.value = "";
         autoResize(input);
 
