@@ -205,22 +205,6 @@
             font-size: 14px;
         }
 
-        #authScreen {
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .auth-box {
-            max-width: 500px;
-            width: 100%;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 35px 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-        }
-
         #selectionScreen {
             align-items: center;
             justify-content: center;
@@ -831,19 +815,6 @@
         </div>
     </section>
 
-    <!-- شاشة طلب تسجيل الدخول أو التخطي -->
-    <section id="authScreen" class="screen">
-        <div class="auth-box">
-            <div class="logo" style="width: 70px; height: 70px; font-size: 32px; margin-bottom: 15px;">🔐</div>
-            <h2 class="title" style="font-size: 22px;">تسجيل الدخول مطلوب للذكاء الاصطناعي</h2>
-            <p class="subtitle" style="margin-bottom: 25px; font-size: 13px;">
-                لكي يعمل المعلم الذكي ويحفظ نقاطك وتقدمك، يُفضل تسجيل الدخول، أو يمكنك التسجيل لاحقاً.
-            </p>
-            <button class="btn btn-primary full" style="margin-bottom: 12px;" onclick="doSignIn()">تسجيل الدخول الآن 🔑</button>
-            <button class="btn btn-secondary full" onclick="skipSignIn()">التسجيل لاحقاً (متابعة) ⏭️</button>
-        </div>
-    </section>
-
     <!-- شاشة الاختيار -->
     <section id="selectionScreen" class="screen">
         <div class="selection-box">
@@ -1067,42 +1038,10 @@
     };
 
     function startApp() {
-        // فحص ما إذا كان المستخدم قد ظهرت له شاشة المصادقة من قبل أو قام بتخطيها
-        var hasSeenAuth = localStorage.getItem("smart_teacher_auth_seen");
-        
-        if (hasSeenAuth === "true") {
-            // إذا ظهرت مسبقاً، انتقل مباشرة لصفحة الاختيار بدون إظهارها مرة أخرى
-            showScreen("selectionScreen");
-            setStep(1);
-        } else {
-            // أول مرة فقط، تظهر شاشة الاختيار (تسجيل الدخول أو التخطي)
-            showScreen("authScreen");
-        }
+        showScreen("selectionScreen");
+        setStep(1);
     }
     window.startApp = startApp;
-
-    async function doSignIn() {
-        try {
-            if (typeof puter !== 'undefined' && puter.auth) {
-                await puter.auth.signIn({ attempt_temp_user_creation: true });
-            }
-        } catch (e) {
-            console.error("Auth error:", e);
-        }
-        // حفظ العلامة لتجنب ظهور الشاشة مرة أخرى
-        localStorage.setItem("smart_teacher_auth_seen", "true");
-        showScreen("selectionScreen");
-        setStep(1);
-    }
-    window.doSignIn = doSignIn;
-
-    function skipSignIn() {
-        // حفظ العلامة لتجنب ظهور الشاشة مرة أخرى عند التخطي أيضاً
-        localStorage.setItem("smart_teacher_auth_seen", "true");
-        showScreen("selectionScreen");
-        setStep(1);
-    }
-    window.skipSignIn = skipSignIn;
 
     function toggleDropdown() {
         document.getElementById("dropdownMenu").classList.toggle("show");
@@ -1694,10 +1633,6 @@
         try {
             if (typeof puter === 'undefined' || !puter.ai) {
                 throw new Error("Puter AI غير متاح حالياً.");
-            }
-
-            if (puter.auth && !puter.auth.isSignedIn()) {
-                await puter.auth.signIn({ attempt_temp_user_creation: true });
             }
 
             var response;
