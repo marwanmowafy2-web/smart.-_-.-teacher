@@ -12,7 +12,7 @@
             "short_name": "Smart Teacher",
             "start_url": window.location.href,
             "display": "standalone",
-            "background_color": "#0f172a",
+            "background_color": "#090d16",
             "theme_color": "#10b981",
             "icons": [
                 { "src": "https://cdn-icons-png.flaticon.com/512/3413/3413535.png", "sizes": "192x192", "type": "image/png" },
@@ -47,7 +47,6 @@
         .screen { display: none; height: 100%; width: 100%; padding: 20px; overflow-y: auto; }
         .screen.active { display: flex; flex-direction: column; }
         
-        /* خلفية متحركة تفاعلية بالكامل زي الفيديو بالضبط */
         #welcomeScreen { 
             align-items: center; 
             justify-content: center; 
@@ -57,7 +56,6 @@
             overflow: hidden;
         }
 
-        /* دوائر الضوء المتحركة في الخلفية لتشبه تأثير الفيديو الريلز */
         .bg-blob-1, .bg-blob-2 {
             position: absolute;
             border-radius: 50%;
@@ -218,7 +216,6 @@
 <body>
 
 <div class="app">
-    <!-- شاشة الترحيب بخلفية متحركة حقيقية -->
     <section id="welcomeScreen" class="screen active">
         <div class="bg-blob-1"></div>
         <div class="bg-blob-2"></div>
