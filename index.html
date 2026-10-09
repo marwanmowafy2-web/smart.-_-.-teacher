@@ -12,7 +12,7 @@
             "short_name": "Smart Teacher",
             "start_url": window.location.href,
             "display": "standalone",
-            "background_color": "#090d16",
+            "background_color": "#0f172a",
             "theme_color": "#10b981",
             "icons": [
                 { "src": "https://cdn-icons-png.flaticon.com/512/3413/3413535.png", "sizes": "192x192", "type": "image/png" },
@@ -47,66 +47,28 @@
         .screen { display: none; height: 100%; width: 100%; padding: 20px; overflow-y: auto; }
         .screen.active { display: flex; flex-direction: column; }
         
+        /* شاشة ترحيب بخلفية متحركة وألوان متدرجة تفاعلية زي الفيديو */
         #welcomeScreen { 
             align-items: center; 
             justify-content: center; 
             text-align: center; 
-            background: #090d16;
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #065f46, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
         }
 
-        .bg-blob-1, .bg-blob-2 {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 0;
-            opacity: 0.5;
-            animation: moveBlobs 8s infinite alternate ease-in-out;
-        }
-
-        .bg-blob-1 {
-            width: 300px;
-            height: 300px;
-            background: #10b981;
-            top: -10%;
-            right: -10%;
-        }
-
-        .bg-blob-2 {
-            width: 350px;
-            height: 350px;
-            background: #3b82f6;
-            bottom: -15%;
-            left: -15%;
-            animation-delay: 4s;
-        }
-
-        @keyframes moveBlobs {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-40px, 50px) scale(1.2); }
-            100% { transform: translate(30px, -30px) scale(0.9); }
-        }
-
-        .welcome-box { 
-            position: relative;
-            z-index: 2;
-            max-width: 650px; 
-            width: 100%; 
-            padding: 35px 20px; 
-            background: rgba(30, 41, 59, 0.65); 
-            backdrop-filter: blur(16px); 
-            border-radius: 30px; 
-            border: 1px solid rgba(255,255,255,0.12); 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .welcome-animation-container { position: relative; width: 120px; height: 120px; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center; }
-        .welcome-pulse-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(16, 185, 129, 0.35); animation: wavePulse 2s infinite ease-out; }
+        .welcome-pulse-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(16, 185, 129, 0.3); animation: wavePulse 2s infinite ease-out; }
         .welcome-pulse-ring:nth-child(2) { animation-delay: 0.6s; }
-        .animated-logo-box { width: 85px; height: 85px; border-radius: 26px; background: linear-gradient(135deg, var(--main), var(--main-dark)); display: flex; align-items: center; justify-content: center; font-size: 42px; position: relative; z-index: 2; box-shadow: 0 20px 40px rgba(16,185,129,.5); animation: floatLogo 3s infinite ease-in-out; }
-        @keyframes wavePulse { 0% { transform: scale(0.95); opacity: 1; } 100% { transform: scale(2.2); opacity: 0; } }
-        @keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        .animated-logo-box { width: 85px; height: 85px; border-radius: 26px; background: linear-gradient(135deg, var(--main), var(--main-dark)); display: flex; align-items: center; justify-content: center; font-size: 42px; position: relative; z-index: 2; box-shadow: 0 20px 50px rgba(16,185,129,.4); animation: floatLogo 3s infinite ease-in-out; }
+        @keyframes wavePulse { 0% { transform: scale(0.95); opacity: 0.9; } 100% { transform: scale(2); opacity: 0; } }
+        @keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         .title { font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 10px; }
         .subtitle { color: var(--sub); text-align: center; line-height: 1.8; margin-bottom: 20px; font-size: 13px; }
@@ -119,6 +81,7 @@
         .btn-install { color: white; background: linear-gradient(135deg, #06b6d4, #3b82f6); font-size: 13px; padding: 8px 14px; border-radius: 10px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; border: 1px solid rgba(255,255,255,0.2); }
         .full { width: 100%; }
 
+        .welcome-box { max-width: 650px; width: 100%; padding: 35px 20px; background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(12px); border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
         .welcome-title { font-size: clamp(30px, 8vw, 50px); font-weight: 900; background: linear-gradient(135deg, var(--text), var(--main)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }
         .welcome-description { color: var(--sub); font-size: 16px; line-height: 2; margin-bottom: 30px; }
         .status { margin-top: 18px; min-height: 25px; color: var(--sub); font-size: 14px; }
@@ -217,15 +180,12 @@
 
 <div class="app">
     <section id="welcomeScreen" class="screen active">
-        <div class="bg-blob-1"></div>
-        <div class="bg-blob-2"></div>
-
-        <div class="welcome-box">
-            <div style="position: absolute; top: -15px; left: 0; right: 0; display: flex; justify-content: center;">
+        <div class="welcome-box" style="position: relative;">
+            <div style="position: absolute; top: -10px; left: 0; right: 0; display: flex; justify-content: center;">
                 <button id="installWelcomeBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">📥 تحميل تطبيق Smart Teacher</button>
             </div>
 
-            <div class="welcome-animation-container" style="margin-top: 10px;">
+            <div class="welcome-animation-container" style="margin-top: 30px;">
                 <div class="welcome-pulse-ring"></div>
                 <div class="welcome-pulse-ring"></div>
                 <div class="animated-logo-box">🎓</div>
@@ -756,10 +716,10 @@
 
             let response;
             if (imageToSend) {
-                response = await puter.ai.chat(userText, imageToSend, { model: "gemini-2.5-flash", stream: true });
+                response = await puter.ai.chat(userText, imageToSend, { model: "gemcin-2.5-flash", stream: true });
             } else {
                 conversation.push({ role: "user", content: userText });
-                response = await puter.ai.chat(conversation, { model: "gemini-2.5-flash", stream: true });
+                response = await puter.ai.chat(conversation, { model: "gemcin-2.5-flash", stream: true });
             }
 
             for await (const part of response) {
