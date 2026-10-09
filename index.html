@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المعلم الذكي - المناهج المصرية</title>
 
-    <!-- إعدادات تطبيق الويب (PWA) للتحميل والتحويل لتطبيق -->
     <meta name="theme-color" content="#10b981">
     <script>
-        // حقن ملف الmanifest تلقائياً ليعمل التطبيق بدون الحاجة لملف خارجي منفصل
         const manifestData = {
             "name": "المعلم الذكي - Smart Teacher",
             "short_name": "Smart Teacher",
@@ -17,16 +15,8 @@
             "background_color": "#0f172a",
             "theme_color": "#10b981",
             "icons": [
-                {
-                    "src": "https://cdn-icons-png.flaticon.com/512/3413/3413535.png",
-                    "sizes": "192x192",
-                    "type": "image/png"
-                },
-                {
-                    "src": "https://cdn-icons-png.flaticon.com/512/3413/3413535.png",
-                    "sizes": "512x512",
-                    "type": "image/png"
-                }
+                { "src": "https://cdn-icons-png.flaticon.com/512/3413/3413535.png", "sizes": "192x192", "type": "image/png" },
+                { "src": "https://cdn-icons-png.flaticon.com/512/3413/3413535.png", "sizes": "512x512", "type": "image/png" }
             ]
         };
         const stringManifest = JSON.stringify(manifestData);
@@ -38,986 +28,229 @@
         document.head.appendChild(link);
     </script>
 
-    <!-- Puter AI -->
     <script src="https://js.puter.com/v2/"></script>
-
-    <!-- Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --main: #10b981;
-            --main-dark: #059669;
-            --bg: #0f172a;
-            --card: #1e293b;
-            --card2: #243247;
-            --text: #f8fafc;
-            --sub: #94a3b8;
-            --danger: #ef4444;
-            --border: rgba(255,255,255,.08);
-            --audio-accent: #a855f7;
-            --badge-bg: #f59e0b;
+            --main: #10b981; --main-dark: #059669; --bg: #0f172a; --card: #1e293b; --card2: #243247;
+            --text: #f8fafc; --sub: #94a3b8; --danger: #ef4444; --border: rgba(255,255,255,.08);
+            --audio-accent: #a855f7; --badge-bg: #f59e0b;
         }
-
         body.light-theme {
-            --bg: #f1f5f9;
-            --card: #ffffff;
-            --card2: #e2e8f0;
-            --text: #0f172a;
-            --sub: #64748b;
-            --border: rgba(0,0,0,.1);
-        }
-
-        html, body {
-            height: 100%;
-            overflow: hidden;
-            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            transition: background 0.3s, color 0.3s;
-        }
-
-        button, input, textarea {
-            font-family: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        .app {
-            height: 100%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .screen {
-            display: none;
-            height: 100%;
-            width: 100%;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .screen.active {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo {
-            width: 85px;
-            height: 85px;
-            border-radius: 26px;
-            background: linear-gradient(135deg, var(--main), var(--main-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 42px;
-            margin: 0 auto 20px;
-            box-shadow: 0 20px 50px rgba(16,185,129,.25);
-        }
-
-        .title {
-            font-size: 26px;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: var(--sub);
-            text-align: center;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            font-size: 13px;
-        }
-
-        .btn {
-            border: none;
-            border-radius: 12px;
-            padding: 12px 16px;
-            font-size: 16px;
-            font-weight: 700;
-            transition: .2s;
-            white-space: nowrap;
-        }
-
-        .btn:active {
-            transform: scale(.97);
-        }
-
-        .btn-primary {
-            color: white;
-            background: linear-gradient(135deg, var(--main), var(--main-dark));
-            box-shadow: 0 8px 20px rgba(16,185,129,.2);
-        }
-
-        .btn-secondary {
-            color: var(--text);
-            background: var(--card2);
-            border: 1px solid var(--border);
-            font-size: 14px;
-            padding: 9px 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-quiz {
-            color: white;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            box-shadow: 0 4px 12px rgba(245,158,11,.2);
-            font-size: 14px;
-            padding: 9px 14px;
-        }
-
-        .btn-danger {
-            color: white;
-            background: rgba(239,68,68,.15);
-            border: 1px solid rgba(239,68,68,.25);
-        }
-
-        .btn-external {
-            color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 12px;
-            border-radius: 14px;
-        }
-
-        /* زر تحميل التطبيق الاحترافي */
-        .btn-install {
-            color: white;
-            background: linear-gradient(135deg, #06b6d4, #3b82f6);
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
-            font-size: 13px;
-            padding: 8px 14px;
-            border-radius: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 700;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: pulseGlow 2s infinite;
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4); }
-            70% { box-shadow: 0 0 0 8px rgba(6, 182, 212, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
-        }
-
-        .full {
-            width: 100%;
-        }
-
-        #welcomeScreen {
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .welcome-box {
-            max-width: 650px;
-            width: 100%;
-            padding: 35px 20px;
-        }
-
-        .welcome-title {
-            font-size: clamp(30px, 8vw, 50px);
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--text), var(--main));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-        }
-
-        .welcome-description {
-            color: var(--sub);
-            font-size: 16px;
-            line-height: 2;
-            margin-bottom: 30px;
-        }
-
-        .status {
-            margin-top: 18px;
-            min-height: 25px;
-            color: var(--sub);
-            font-size: 14px;
-        }
-
-        #selectionScreen {
-            align-items: center;
-            justify-content: center;
-        }
-
-        .selection-box {
-            width: 100%;
-            max-width: 750px;
-            margin: auto;
-        }
-
-        .stepper {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .stepper::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--border);
-            z-index: 1;
-            transform: translateY(-50%);
-        }
-
-        .step-item {
-            position: relative;
-            z-index: 2;
-            background: var(--bg);
-            padding: 0 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .step-circle {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--card2);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--sub);
-        }
-
-        .step-item.active .step-circle {
-            background: var(--main);
-            color: white;
-            border-color: var(--main);
-            box-shadow: 0 0 15px rgba(16,185,129,.4);
-        }
-
-        .step-item.completed .step-circle {
-            background: var(--main-dark);
-            color: white;
-        }
-
-        .step-label {
-            font-size: 11px;
-            color: var(--sub);
-        }
-
-        .step-item.active .step-label {
-            color: var(--text);
-            font-weight: bold;
-        }
-
-        .selection-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 18px;
-            display: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .selection-card.active-step {
-            display: block;
-        }
-
-        .selection-card h3 {
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 15px;
-            color: var(--text);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-        }
-
-        .option-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
-        }
-
-        .option {
-            background: var(--card2);
-            border: 1px solid var(--border);
-            color: var(--text);
-            border-radius: 16px;
-            padding: 12px;
-            text-align: right;
-            font-size: 14px;
-            transition: all 0.25s ease;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            width: 100%;
-            direction: rtl;
-        }
-
-        .option:hover {
-            border-color: var(--main);
-            background: rgba(16,185,129,0.12);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16,185,129,0.2);
-        }
-
-        .option-icon {
-            font-size: 20px;
-            width: 38px;
-            height: 38px;
-            background: var(--card);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            border: 1px solid var(--border);
-        }
-
-        .option-content {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            flex: 1;
-            min-width: 0;
-            text-align: right;
-        }
-
-        .option-title {
-            font-weight: 700;
-            font-size: 13px;
-            color: var(--text);
-            direction: rtl;
-        }
-
-        .option-tag {
-            font-size: 10px;
-            color: var(--sub);
-            direction: rtl;
-            line-height: 1.4;
-        }
-
-        .back-btn {
-            margin-bottom: 18px;
-        }
-
-        #chatScreen {
-            padding: 0;
-            display: none;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        #chatScreen.active {
-            display: flex;
-        }
-
-        .chat-header {
-            flex-shrink: 0;
-            background: var(--card);
-            border-bottom: 1px solid var(--border);
-            padding: 12px 16px;
-            z-index: 30;
-            position: relative;
-        }
-
-        .chat-header-inner {
-            max-width: 1000px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .brand-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--main), var(--main-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .brand-title {
-            font-weight: 800;
-            font-size: 15px;
-            line-height: 1.2;
-        }
-
-        .brand-sub {
-            font-size: 11px;
-            color: var(--sub);
-            margin-top: 2px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 55px;
-            left: 16px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            z-index: 100;
-            min-width: 170px;
-        }
-
-        .dropdown-menu.show {
-            display: block;
-        }
-
-        .dropdown-item {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: var(--text);
-            padding: 10px 12px;
-            text-align: right;
-            font-size: 13px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .dropdown-item:hover {
-            background: var(--card2);
-        }
-
-        .dropdown-divider {
-            height: 1px;
-            background: var(--border);
-            margin: 4px 0;
-        }
-
-        .collapsible-tools {
-            flex-shrink: 0;
-            background: var(--card2);
-            border-bottom: 1px solid var(--border);
-            max-width: 1000px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .tools-bar {
-            padding: 6px 12px;
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            align-items: center;
-        }
-
-        .tool-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 4px 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            white-space: nowrap;
-        }
-
-        .timer-display {
-            font-family: monospace;
-            font-weight: bold;
-            color: #38bdf8;
-        }
-
-        .audio-box, .notes-box, .badges-box {
-            display: none;
-            padding: 10px 12px;
-            background: var(--card);
-            border-bottom: 1px solid var(--border);
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .audio-box.show, .notes-box.show, .badges-box.show {
-            display: block;
-        }
-
-        .badges-grid {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-top: 4px;
-        }
-
-        .badge-item {
-            background: var(--card2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 6px 10px;
-            font-size: 11px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            opacity: 0.4;
-            transition: 0.3s;
-        }
-
-        .badge-item.unlocked {
-            opacity: 1;
-            border-color: var(--badge-bg);
-            background: rgba(245, 158, 11, 0.1);
-        }
-
-        .chat-area {
-            flex: 1;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 15px;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-
-        .message {
-            display: flex;
-            margin-bottom: 15px;
-            flex-direction: column;
-            animation: fadeInMsg 0.3s ease;
-        }
-
-        @keyframes fadeInMsg {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .message.user {
-            align-items: flex-start;
-        }
-
-        .message.ai {
-            align-items: flex-end;
-        }
-
-        .bubble {
-            max-width: min(850px, 90%);
-            border-radius: 18px;
-            padding: 14px 18px;
-            line-height: 2;
-            font-size: 15px;
-            overflow-wrap: anywhere;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .user .bubble {
-            background: linear-gradient(135deg, var(--main), var(--main-dark));
-            color: white;
-            border-bottom-left-radius: 4px;
-        }
-
-        .ai .bubble {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-bottom-right-radius: 4px;
-        }
-
-        /* تعديلات تنسيق الفقرات والنقاط في ردود الذكاء الاصطناعي لمنع التشابك */
-        .ai .bubble p {
-            margin-bottom: 12px;
-            line-height: 2.1;
-        }
-
-        .ai .bubble ul, .ai .bubble ol {
-            margin-right: 20px;
-            margin-bottom: 12px;
-        }
-
-        .ai .bubble li {
-            margin-bottom: 8px;
-            line-height: 1.9;
-        }
-
-        /* تنسيق خاص للأرقام أو الاختيارات أو الخطوات لتظهر في سطور مستقلة ومنظمة */
-        .ai .bubble strong {
-            display: inline-block;
-            margin-top: 6px;
-            color: #38bdf8;
-        }
-
-        /* تحويل الخطوات المرقمة (مثل 1. و 2. أو أ، ب، ج) إلى كتل مريحة ومنظمة بمسافات */
-        .ai .bubble p strong + *, .ai .bubble li strong {
-            display: inline-block;
-        }
-
-        .msg-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-            align-items: center;
-        }
-
-        .action-icon-btn {
-            background: var(--card2);
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 13px;
-            padding: 6px 12px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .action-icon-btn:hover {
-            background: var(--main);
-            color: white;
-            border-color: var(--main);
-            transform: translateY(-1px);
-        }
-
-        .bubble pre {
-            background: #0b1120;
-            color: #f8fafc;
-            padding: 12px;
-            border-radius: 10px;
-            overflow-x: auto;
-            direction: ltr;
-            text-align: left;
-            margin-top: 8px;
-        }
-
-        .typing {
-            display: inline-flex;
-            gap: 6px;
-            align-items: center;
-            padding: 4px 0;
-        }
-
-        .typing span {
-            width: 7px;
-            height: 7px;
-            background: var(--main);
-            border-radius: 50%;
-            animation: bounce 1.2s infinite ease-in-out both;
-        }
-
+            --bg: #f1f5f9; --card: #ffffff; --card2: #e2e8f0; --text: #0f172a; --sub: #64748b; --border: rgba(0,0,0,.1);
+        }
+        html, body { height: 100%; overflow: hidden; font-family: "Segoe UI", Tahoma, Arial, sans-serif; background: var(--bg); color: var(--text); }
+        button, input, textarea { font-family: inherit; cursor: pointer; }
+        .app { height: 100%; width: 100%; display: flex; flex-direction: column; }
+        .screen { display: none; height: 100%; width: 100%; padding: 20px; overflow-y: auto; }
+        .screen.active { display: flex; flex-direction: column; }
+        
+        /* شاشة ترحيب بخلفية متحركة وألوان متدرجة تفاعلية زي الفيديو */
+        #welcomeScreen { 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #065f46, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .welcome-animation-container { position: relative; width: 120px; height: 120px; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center; }
+        .welcome-pulse-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(16, 185, 129, 0.3); animation: wavePulse 2s infinite ease-out; }
+        .welcome-pulse-ring:nth-child(2) { animation-delay: 0.6s; }
+        .animated-logo-box { width: 85px; height: 85px; border-radius: 26px; background: linear-gradient(135deg, var(--main), var(--main-dark)); display: flex; align-items: center; justify-content: center; font-size: 42px; position: relative; z-index: 2; box-shadow: 0 20px 50px rgba(16,185,129,.4); animation: floatLogo 3s infinite ease-in-out; }
+        @keyframes wavePulse { 0% { transform: scale(0.95); opacity: 0.9; } 100% { transform: scale(2); opacity: 0; } }
+        @keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        .title { font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 10px; }
+        .subtitle { color: var(--sub); text-align: center; line-height: 1.8; margin-bottom: 20px; font-size: 13px; }
+        .btn { border: none; border-radius: 12px; padding: 12px 16px; font-size: 16px; font-weight: 700; transition: .2s; white-space: nowrap; }
+        .btn-primary { color: white; background: linear-gradient(135deg, var(--main), var(--main-dark)); box-shadow: 0 8px 20px rgba(16,185,129,.3); }
+        .btn-secondary { color: var(--text); background: var(--card2); border: 1px solid var(--border); font-size: 14px; padding: 9px 14px; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-quiz { color: white; background: linear-gradient(135deg, #f59e0b, #d97706); font-size: 14px; padding: 9px 14px; }
+        .btn-danger { color: white; background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.25); }
+        .btn-external { color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px; padding: 12px; border-radius: 14px; }
+        .btn-install { color: white; background: linear-gradient(135deg, #06b6d4, #3b82f6); font-size: 13px; padding: 8px 14px; border-radius: 10px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; border: 1px solid rgba(255,255,255,0.2); }
+        .full { width: 100%; }
+
+        .welcome-box { max-width: 650px; width: 100%; padding: 35px 20px; background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(12px); border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
+        .welcome-title { font-size: clamp(30px, 8vw, 50px); font-weight: 900; background: linear-gradient(135deg, var(--text), var(--main)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }
+        .welcome-description { color: var(--sub); font-size: 16px; line-height: 2; margin-bottom: 30px; }
+        .status { margin-top: 18px; min-height: 25px; color: var(--sub); font-size: 14px; }
+
+        #selectionScreen { align-items: center; justify-content: center; }
+        .selection-box { width: 100%; max-width: 750px; margin: auto; }
+        .stepper { display: flex; justify-content: space-between; margin-bottom: 25px; position: relative; }
+        .stepper::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: var(--border); z-index: 1; transform: translateY(-50%); }
+        .step-item { position: relative; z-index: 2; background: var(--bg); padding: 0 10px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .step-circle { width: 30px; height: 30px; border-radius: 50%; background: var(--card2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; color: var(--sub); }
+        .step-item.active .step-circle { background: var(--main); color: white; border-color: var(--main); }
+        .step-item.completed .step-circle { background: var(--main-dark); color: white; }
+        .step-label { font-size: 11px; color: var(--sub); }
+        .step-item.active .step-label { color: var(--text); font-weight: bold; }
+
+        .selection-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 20px; margin-bottom: 18px; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .selection-card.active-step { display: block; }
+        .selection-card h3 { margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; font-size: 15px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        
+        .option-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .option { background: var(--card2); border: 1px solid var(--border); color: var(--text); border-radius: 16px; padding: 12px; text-align: right; font-size: 14px; display: flex; flex-direction: row; align-items: center; gap: 10px; width: 100%; direction: rtl; }
+        .option:hover { border-color: var(--main); background: rgba(16,185,129,0.12); }
+        .option-icon { font-size: 20px; width: 38px; height: 38px; background: var(--card); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--border); }
+        .option-content { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; text-align: right; }
+        .option-title { font-weight: 700; font-size: 13px; color: var(--text); }
+        .option-tag { font-size: 10px; color: var(--sub); line-height: 1.4; }
+
+        #chatScreen { padding: 0; display: none; flex-direction: column; height: 100vh; overflow: hidden; }
+        #chatScreen.active { display: flex; }
+        .chat-header { flex-shrink: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 16px; z-index: 30; position: relative; }
+        .chat-header-inner { max-width: 1000px; margin: auto; display: flex; align-items: center; justify-content: space-between; }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand-icon { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, var(--main), var(--main-dark)); display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; flex-shrink: 0; }
+        .brand-title { font-weight: 800; font-size: 15px; }
+        .brand-sub { font-size: 11px; color: var(--sub); }
+        .header-actions { display: flex; gap: 8px; align-items: center; }
+
+        .dropdown-menu { display: none; position: absolute; top: 55px; left: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 100; min-width: 170px; }
+        .dropdown-menu.show { display: block; }
+        .dropdown-item { width: 100%; background: transparent; border: none; color: var(--text); padding: 10px 12px; text-align: right; font-size: 13px; border-radius: 8px; display: flex; align-items: center; gap: 8px; }
+        .dropdown-item:hover { background: var(--card2); }
+        .dropdown-divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+        .collapsible-tools { flex-shrink: 0; background: var(--card2); border-bottom: 1px solid var(--border); max-width: 1000px; width: 100%; margin: 0 auto; }
+        .tools-bar { padding: 6px 12px; display: flex; gap: 8px; overflow-x: auto; align-items: center; }
+        .tool-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 4px 8px; display: flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap; }
+        .timer-display { font-family: monospace; font-weight: bold; color: #38bdf8; }
+
+        .audio-box, .notes-box, .badges-box { display: none; padding: 10px 12px; background: var(--card); border-bottom: 1px solid var(--border); max-width: 1000px; margin: 0 auto; }
+        .audio-box.show, .notes-box.show, .badges-box.show { display: block; }
+        .badges-grid { display: flex; gap: 8px; overflow-x: auto; padding-top: 4px; }
+        .badge-item { background: var(--card2); border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px; font-size: 11px; display: flex; align-items: center; gap: 5px; opacity: 0.4; }
+        .badge-item.unlocked { opacity: 1; border-color: var(--badge-bg); background: rgba(245, 158, 11, 0.1); }
+
+        .chat-area { flex: 1; width: 100%; max-width: 1000px; margin: 0 auto; padding: 15px; overflow-y: auto; scroll-behavior: smooth; }
+        .message { display: flex; margin-bottom: 15px; flex-direction: column; }
+        .message.user { align-items: flex-start; }
+        .message.ai { align-items: flex-end; }
+        
+        .bubble { max-width: min(850px, 90%); border-radius: 18px; padding: 16px 20px; line-height: 2.1; font-size: 15px; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .user .bubble { background: linear-gradient(135deg, var(--main), var(--main-dark)); color: white; border-bottom-left-radius: 4px; }
+        .ai .bubble { background: var(--card); border: 1px solid var(--border); border-bottom-right-radius: 4px; }
+
+        .ai .bubble p { margin-bottom: 14px; line-height: 2.2; }
+        .ai .bubble ul, .ai .bubble ol { margin-right: 20px; margin-bottom: 14px; }
+        .ai .bubble li { margin-bottom: 10px; line-height: 2; }
+        .ai .bubble strong { display: block; margin-top: 10px; margin-bottom: 4px; color: #38bdf8; font-size: 16px; font-weight: 700; }
+        .ai .bubble hr { border: 0; border-top: 1px solid var(--border); margin: 12px 0; }
+
+        .msg-actions { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+        .action-icon-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text); font-size: 13px; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; }
+        .action-icon-btn:hover { background: var(--main); color: white; border-color: var(--main); }
+
+        .typing { display: inline-flex; gap: 6px; align-items: center; padding: 4px 0; }
+        .typing span { width: 7px; height: 7px; background: var(--main); border-radius: 50%; animation: bounce 1.2s infinite ease-in-out both; }
         .typing span:nth-child(2) { animation-delay: .2s; }
         .typing span:nth-child(3) { animation-delay: .4s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
 
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
-        }
-
-        .message-image {
-            max-width: 240px;
-            max-height: 260px;
-            border-radius: 12px;
-            display: block;
-            margin-bottom: 8px;
-            object-fit: contain;
-            background: #000;
-        }
-
-        .chat-input-wrapper {
-            flex-shrink: 0;
-            background: var(--card);
-            border-top: 1px solid var(--border);
-            padding: 10px 12px;
-            z-index: 20;
-        }
-
-        .chat-input {
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        .image-preview {
-            display: none;
-            background: var(--card2);
-            border: 1px solid var(--border);
-            padding: 8px 12px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .image-preview.show {
-            display: flex;
-        }
-
-        .preview-image {
-            width: 45px;
-            height: 45px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-
-        .preview-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .preview-name {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: 13px;
-        }
-
-        .input-row {
-            display: flex;
-            gap: 8px;
-            background: var(--card2);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 6px 10px;
-            align-items: center;
-        }
-
-        .icon-btn, .send-btn {
-            width: 38px;
-            height: 38px;
-            flex-shrink: 0;
-            border: none;
-            border-radius: 12px;
-            background: var(--card);
-            color: var(--text);
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .send-btn {
-            background: var(--main);
-            color: white;
-        }
-
-        .send-btn:disabled {
-            opacity: .5;
-            cursor: not-allowed;
-        }
-
-        textarea {
-            flex: 1;
-            resize: none;
-            height: 38px;
-            max-height: 100px;
-            border: none;
-            outline: none;
-            background: transparent;
-            color: var(--text);
-            padding: 8px 4px;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .toast {
-            position: fixed;
-            left: 50%;
-            bottom: 80px;
-            transform: translateX(-50%) translateY(20px);
-            background: #020617;
-            color: white;
-            border: 1px solid var(--border);
-            padding: 10px 16px;
-            border-radius: 12px;
-            opacity: 0;
-            pointer-events: none;
-            transition: .3s;
-            z-index: 100;
-            font-size: 14px;
-            display: none;
-        }
+        .message-image { max-width: 240px; max-height: 260px; border-radius: 12px; display: block; margin-bottom: 8px; object-fit: contain; background: #000; }
+        .chat-input-wrapper { flex-shrink: 0; background: var(--card); border-top: 1px solid var(--border); padding: 10px 12px; z-index: 20; }
+        .chat-input { max-width: 1000px; margin: auto; }
+        .image-preview { display: none; background: var(--card2); border: 1px solid var(--border); padding: 8px 12px; border-radius: 12px; margin-bottom: 8px; align-items: center; gap: 10px; }
+        .image-preview.show { display: flex; }
+        .preview-image { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
+        .preview-info { flex: 1; min-width: 0; }
+        .preview-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+        .input-row { display: flex; gap: 8px; background: var(--card2); border: 1px solid var(--border); border-radius: 18px; padding: 6px 10px; align-items: center; }
+        .icon-btn, .send-btn { width: 38px; height: 38px; flex-shrink: 0; border: none; border-radius: 12px; background: var(--card); color: var(--text); font-size: 18px; display: flex; align-items: center; justify-content: center; }
+        .send-btn { background: var(--main); color: white; }
+        .send-btn:disabled { opacity: .5; cursor: not-allowed; }
+        textarea { flex: 1; resize: none; height: 38px; max-height: 100px; border: none; outline: none; background: transparent; color: var(--text); padding: 8px 4px; font-size: 14px; line-height: 1.4; }
     </style>
 </head>
 <body>
 
 <div class="app">
-    <!-- شاشة الترحيب الأساسية -->
     <section id="welcomeScreen" class="screen active">
         <div class="welcome-box" style="position: relative;">
-            <!-- زر تثبيت التطبيق في شاشة الترحيب أيضاً -->
             <div style="position: absolute; top: -10px; left: 0; right: 0; display: flex; justify-content: center;">
-                <button id="installWelcomeBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">
-                    📥 تحميل تطبيق Smart Teacher
-                </button>
+                <button id="installWelcomeBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">📥 تحميل تطبيق Smart Teacher</button>
             </div>
 
-            <div class="logo" style="margin-top: 30px;">🎓</div>
+            <div class="welcome-animation-container" style="margin-top: 30px;">
+                <div class="welcome-pulse-ring"></div>
+                <div class="welcome-pulse-ring"></div>
+                <div class="animated-logo-box">🎓</div>
+            </div>
+
             <div class="welcome-title">المعلم الذكي</div>
-            <p class="welcome-description">
-                مساعدك الذكي للمناهج المصرية الحديثة<br>اسأل، صوّر السؤال، اكسب نقاطاً وأوسمة، واستمتع بالمذاكرة.
-            </p>
+            <p class="welcome-description">مساعدك الذكي للمناهج المصرية الحديثة<br>اسأل، صوّر السؤال، اكسب نقاطاً وأوسمة، واستمتع بالمذاكرة.</p>
             <button id="startButton" class="btn btn-primary full" onclick="startApp()">🚀 ابدأ الآن</button>
             <div id="status" class="status">جاهز للبدء</div>
         </div>
     </section>
 
-    <!-- شاشة الاختيار -->
     <section id="selectionScreen" class="screen">
         <div class="selection-box">
             <div class="selection-header">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <button id="mainBackBtn" class="btn btn-secondary back-btn" onclick="handleBack()" style="margin-bottom: 0;">⬅️ رجوع للخلف</button>
-                    <!-- زر تثبيت التطبيق هنا أيضاً -->
-                    <button id="installSelectionBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">
-                        📥 تحميل تطبيق Smart Teacher
-                    </button>
+                    <button id="installSelectionBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">📥 تحميل تطبيق Smart Teacher</button>
                 </div>
                 
                 <div class="stepper">
-                    <div id="step1Indicator" class="step-item active">
-                        <div class="step-circle">1</div>
-                        <div class="step-label">المرحلة</div>
-                    </div>
-                    <div id="step2Indicator" class="step-item">
-                        <div class="step-circle">2</div>
-                        <div class="step-label">الصف</div>
-                    </div>
-                    <div id="step3Indicator" class="step-item">
-                        <div class="step-circle">3</div>
-                        <div class="step-label">المادة</div>
-                    </div>
+                    <div id="step1Indicator" class="step-item active"><div class="step-circle">1</div><div class="step-label">المرحلة</div></div>
+                    <div id="step2Indicator" class="step-item"><div class="step-circle">2</div><div class="step-label">الصف</div></div>
+                    <div id="step3Indicator" class="step-item"><div class="step-circle">3</div><div class="step-label">المادة</div></div>
                 </div>
 
                 <h1 id="selectionTitle" class="title">اختر المرحلة 🎓</h1>
                 <p id="selectionSubtitle" class="subtitle">حدد مرحلتك التعليمية للبدء.</p>
             </div>
 
-            <!-- خطوة 1: المرحلة -->
             <div id="stageCard" class="selection-card active-step">
                 <h3><span>🎓 المرحلة التعليمية</span></h3>
-                <div class="option-grid stages-grid">
-                    <button class="option" onclick="selectStage('ابتدائي')">
-                        <div class="option-icon">🧒</div>
-                        <div class="option-content">
-                            <span class="option-title">المرحلة الابتدائية</span>
-                            <span class="option-tag">تأسيس ومناهج مبسطة من الأول للسادس 📖</span>
-                        </div>
-                    </button>
-                    <button class="option" onclick="selectStage('إعدادي')">
-                        <div class="option-icon">📘</div>
-                        <div class="option-content">
-                            <span class="option-title">المرحلة الإعدادية</span>
-                            <span class="option-tag">تطوير الفهم العلمي من الأول للثالث 🧠</span>
-                        </div>
-                    </button>
-                    <button class="option" onclick="selectStage('ثانوي')">
-                        <div class="option-icon">🎓</div>
-                        <div class="option-content">
-                            <span class="option-title">المرحلة الثانوية</span>
-                            <span class="option-tag">نظام حديث وتدريب متقدم (عام، علمي، أدبي) 🔬</span>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- خطوة 2: الصف -->
-            <div id="gradeCard" class="selection-card">
-                <h3>
-                    <span>📖 اختر الصف الدراسي</span>
-                    <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="handleBack()">⬅️ رجوع</button>
-                </h3>
-                <div id="gradeOptions" class="option-grid"></div>
-                
-                <a href="https://studentbooks.moe.gov.eg" target="_blank" class="btn btn-external full">
-                    🌐 فتح بوابة التقييمات والكتب الدراسية الرسمية 📥
-                </a>
-            </div>
-
-            <!-- خطوة 3: الشعبة -->
-            <div id="trackCard" class="selection-card">
-                <h3>
-                    <span>🧪 اختر الشعبة</span>
-                    <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="handleBack()">⬅️ رجوع</button>
-                </h3>
                 <div class="option-grid">
-                    <button class="option" onclick="selectTrack('علمي')">
-                        <div class="option-icon">🔬</div>
-                        <div class="option-content">
-                            <span class="option-title">شعبة علمي</span>
-                            <span class="option-tag">فيزياء، كيمياء، أحياء، رياضيات ⚡</span>
-                        </div>
-                    </button>
-                    <button class="option" onclick="selectTrack('أدبي')">
-                        <div class="option-icon">📚</div>
-                        <div class="option-content">
-                            <span class="option-title">شعبة أدبي</span>
-                            <span class="option-tag">تاريخ، جغرافيا، فلسفة، علم نفس 📜</span>
-                        </div>
-                    </button>
+                    <button class="option" onclick="selectStage('ابتدائي')"><div class="option-icon">🧒</div><div class="option-content"><span class="option-title">المرحلة الابتدائية</span><span class="option-tag">تأسيس ومناهج مبسطة 📖</span></div></button>
+                    <button class="option" onclick="selectStage('إعدادي')"><div class="option-icon">📘</div><div class="option-content"><span class="option-title">المرحلة الإعدادية</span><span class="option-tag">تطوير الفهم العلمي 🧠</span></div></button>
+                    <button class="option" onclick="selectStage('ثانوي')"><div class="option-icon">🎓</div><div class="option-content"><span class="option-title">المرحلة الثانوية</span><span class="option-tag">نظام حديث وتدريب متقدم 🔬</span></div></button>
                 </div>
             </div>
 
-            <!-- خطوة 4: المادة -->
+            <div id="gradeCard" class="selection-card">
+                <h3><span>📖 اختر الصف الدراسي</span><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="handleBack()">⬅️ رجوع</button></h3>
+                <div id="gradeOptions" class="option-grid"></div>
+                <a href="https://studentbooks.moe.gov.eg" target="_blank" class="btn btn-external full">🌐 بوابة التقييمات والكتب الرسمية 📥</a>
+            </div>
+
+            <div id="trackCard" class="selection-card">
+                <h3><span>🧪 اختر الشعبة</span><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="handleBack()">⬅️ رجوع</button></h3>
+                <div class="option-grid">
+                    <button class="option" onclick="selectTrack('علمي')"><div class="option-icon">🔬</div><div class="option-content"><span class="option-title">شعبة علمي</span><span class="option-tag">فيزياء، كيمياء، أحياء، رياضيات ⚡</span></div></button>
+                    <button class="option" onclick="selectTrack('أدبي')"><div class="option-icon">📚</div><div class="option-content"><span class="option-title">شعبة أدبي</span><span class="option-tag">تاريخ، جغرافيا، فلسفة 📜</span></div></button>
+                </div>
+            </div>
+
             <div id="subjectCard" class="selection-card">
-                <h3>
-                    <span>📚 اختر المادة الدراسية</span>
-                    <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="handleBack()">⬅️ رجوع</button>
-                </h3>
+                <h3><span>📚 اختر المادة الدراسية</span><button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="handleBack()">⬅️ رجوع</button></h3>
                 <div id="subjectOptions" class="option-grid"></div>
             </div>
         </div>
     </section>
 
-    <!-- شاشة المحادثة -->
     <section id="chatScreen" class="screen">
         <header class="chat-header">
             <div class="chat-header-inner">
                 <div class="brand">
-                    <button class="btn btn-secondary" style="padding: 6px 10px; margin-left: 8px;" onclick="backToSelection()" title="تغيير المادة أو المرحلة">⬅️ رجوع</button>
+                    <button class="btn btn-secondary" style="padding: 6px 10px; margin-left: 8px;" onclick="backToSelection()">⬅️ رجوع</button>
                     <div class="brand-icon">🎓</div>
                     <div>
                         <div class="brand-title">المعلم الذكي</div>
@@ -1026,10 +259,7 @@
                 </div>
 
                 <div class="header-actions">
-                    <!-- زر تثبيت التطبيق في الهيدر العلوي للشات أيضاً -->
-                    <button id="installChatBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">
-                        📥 تحميل التطبيق
-                    </button>
+                    <button id="installChatBtn" style="display:none;" class="btn-install" onclick="triggerInstall()">📥 تحميل التطبيق</button>
                     <button class="btn btn-quiz" onclick="generateQuiz()">🎲 اختبار</button>
                     <button class="btn btn-secondary" onclick="toggleDropdown()">⋮</button>
                 </div>
@@ -1039,9 +269,8 @@
                     <button class="dropdown-item" onclick="toggleNotes(); closeDropdown();">📝 الواجبات والملاحظات</button>
                     <button class="dropdown-item" onclick="toggleBadgesBox(); closeDropdown();">🏆 الأوسمة والنجاح</button>
                     <button class="dropdown-item" onclick="exportSummary(); closeDropdown();">🖨️ طباعة وتحميل PDF</button>
-                    <a href="https://studentbooks.moe.gov.eg" target="_blank" class="dropdown-item" style="text-decoration:none;" onclick="closeDropdown();">🌐 التقييمات الرسمية</a>
                     <div class="dropdown-divider"></div>
-                    <button class="dropdown-item" onclick="toggleTheme(); closeDropdown();" id="themeToggleBtn">🌙 الوضع الفاتح/المظلم</button>
+                    <button class="dropdown-item" onclick="toggleTheme(); closeDropdown();">🌙 الوضع الفاتح/المظلم</button>
                     <button class="dropdown-item" onclick="backToSelection(); closeDropdown();" style="color:var(--danger);">⚙️ تغيير المادة</button>
                 </div>
             </div>
@@ -1049,17 +278,9 @@
 
         <div class="collapsible-tools">
             <div class="tools-bar">
-                <div class="tool-card">
-                    ⏱️ <span id="timerDisplay" class="timer-display">25:00</span>
-                    <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 10px;" onclick="toggleTimer()" id="timerBtn">▶️</button>
-                    <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 10px;" onclick="resetTimer()">🔄</button>
-                </div>
-                <div class="tool-card">
-                    ⭐ النقاط: <b id="userPoints" style="color: #f59e0b;">0</b>
-                </div>
-                <div class="tool-card">
-                    📊 الأسئلة: <b id="questionCount" style="color:var(--main);">0</b>
-                </div>
+                <div class="tool-card">⏱️ <span id="timerDisplay" class="timer-display">25:00</span> <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 10px;" onclick="toggleTimer()" id="timerBtn">▶️</button> <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 10px;" onclick="resetTimer()">🔄</button></div>
+                <div class="tool-card">⭐ النقاط: <b id="userPoints" style="color: #f59e0b;">0</b></div>
+                <div class="tool-card">📊 الأسئلة: <b id="questionCount" style="color:var(--main);">0</b></div>
             </div>
         </div>
 
@@ -1091,7 +312,7 @@
         <main id="chatArea" class="chat-area">
             <div class="message ai">
                 <div class="bubble">
-                    👋 أهلاً بيك!<br><br>أنا <b>المعلم الذكي</b>.<br>اخترت مادة ممتازة! تقدر تسألني في أي جزئية مش فاهمها، أو تضغط على <b>"🎲 اختبار"</b> فوق عشان أختبرك في المادة بسرعة وتكسب نقاط! 📝✨
+                    👋 أهلاً بك يا بطل!<br><br>أنا <b>المعلم الذكي</b> مساعدك الشخصي في المناهج المصرية. اسألني في أي سؤال، أو اضغط على <b>"🎲 اختبار"</b> لنختبر مستواك فوراً! 🚀✨
                 </div>
             </div>
         </main>
@@ -1099,18 +320,15 @@
         <div class="chat-input-wrapper">
             <div class="chat-input">
                 <div id="imagePreview" class="image-preview">
-                    <img id="previewImage" class="preview-image" alt="معاينة الصورة">
-                    <div class="preview-info">
-                        <div id="previewName" class="preview-name">صورة</div>
-                    </div>
+                    <img id="previewImage" class="preview-image" alt="صورة">
+                    <div class="preview-info"><div id="previewName" class="preview-name">صورة</div></div>
                     <button class="btn btn-danger" onclick="removeImage()" style="padding:3px 6px; font-size:11px;">✕</button>
                 </div>
-
                 <div class="input-row">
-                    <button class="icon-btn" onclick="openCamera()" title="الكاميرا">📷</button>
-                    <button class="icon-btn" onclick="openGallery()" title="المعرض">🖼️</button>
-                    <textarea id="messageInput" placeholder="اكتب سؤالك هنا..." rows="1" onkeydown="handleInputKey(event)" oninput="autoResize(this)"></textarea>
-                    <button id="sendButton" class="send-btn" onclick="sendMessage()" title="إرسال">➤</button>
+                    <button class="icon-btn" onclick="openCamera()">📷</button>
+                    <button class="icon-btn" onclick="openGallery()">🖼️</button>
+                    <textarea id="messageInput" placeholder="اكتب سؤالك هنا بوضوح..." rows="1" onkeydown="handleInputKey(event)" oninput="autoResize(this)"></textarea>
+                    <button id="sendButton" class="send-btn" onclick="sendMessage()">➤</button>
                 </div>
             </div>
         </div>
@@ -1120,85 +338,46 @@
     </section>
 </div>
 
-<div id="toast" class="toast"></div>
-
 <script>
     var selectedStage = "", selectedGrade = "", selectedTrack = "", selectedSubject = "";
-    var currentStep = 1;
-    var selectedImage = null, isSending = false, conversation = [];
-    var aiMessagesList = [];
-    
-    var timerInterval = null, timeLeft = 25 * 60, isTimerRunning = false;
-    var notes = [];
-    var askedQuestionsCount = 0;
-    var userPoints = 0;
-
-    // متغيرات تثبيت التطبيق (PWA Install Prompt)
+    var currentStep = 1, selectedImage = null, isSending = false, conversation = [], aiMessagesList = [];
+    var timerInterval = null, timeLeft = 25 * 60, isTimerRunning = false, notes = [], askedQuestionsCount = 0, userPoints = 0;
     let deferredPrompt = null;
 
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        // إظهار جميع أزرار التحميل المتاحة في الشاشات المختلفة
         showInstallButtons(true);
     });
 
     function showInstallButtons(show) {
-        const displayVal = show ? 'inline-flex' : 'none';
-        const wBtn = document.getElementById('installWelcomeBtn');
-        const sBtn = document.getElementById('installSelectionBtn');
-        const cBtn = document.getElementById('installChatBtn');
-        if(wBtn) wBtn.style.display = displayVal;
-        if(sBtn) sBtn.style.display = displayVal;
-        if(cBtn) cBtn.style.display = displayVal;
+        const val = show ? 'inline-flex' : 'none';
+        ['installWelcomeBtn', 'installSelectionBtn', 'installChatBtn'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.style.display = val;
+        });
     }
 
     async function triggerInstall() {
-        if (!deferredPrompt) {
-            alert('التطبيق جاهز بالفعل أو أن متصفحك لا يدعم التثبيت المباشر حالياً.');
-            return;
-        }
+        if (!deferredPrompt) return;
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-            console.log('تم قبول تثبيت التطبيق Smart Teacher');
-            showInstallButtons(false);
-        }
+        if (outcome === 'accepted') showInstallButtons(false);
         deferredPrompt = null;
     }
-    window.triggerInstall = triggerInstall;
 
-    window.onload = function() {
-        loadSavedData();
-    };
+    window.onload = loadSavedData;
 
-    function startApp() {
-        showScreen("selectionScreen");
-        setStep(1);
-    }
-    window.startApp = startApp;
-
-    function toggleDropdown() {
-        document.getElementById("dropdownMenu").classList.toggle("show");
-    }
-    window.toggleDropdown = toggleDropdown;
-
-    function closeDropdown() {
-        document.getElementById("dropdownMenu").classList.remove("show");
-    }
-    window.closeDropdown = closeDropdown;
+    function startApp() { showScreen("selectionScreen"); setStep(1); }
+    function toggleDropdown() { document.getElementById("dropdownMenu").classList.toggle("show"); }
+    function closeDropdown() { document.getElementById("dropdownMenu").classList.remove("show"); }
 
     window.onclick = function(e) {
-        if (!e.target.matches('.btn-secondary') && !e.target.closest('#dropdownMenu')) {
-            closeDropdown();
-        }
+        if (!e.target.matches('.btn-secondary') && !e.target.closest('#dropdownMenu')) closeDropdown();
     }
 
     function showScreen(id) {
-        var screens = document.querySelectorAll(".screen");
-        for (var i = 0; i < screens.length; i++) {
-            screens[i].classList.remove("active");
-        }
+        document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
         document.getElementById(id).classList.add("active");
     }
 
@@ -1210,452 +389,234 @@
     }
 
     function checkBadges() {
-        if (userPoints >= 10) {
-            document.getElementById("badge-first-step").classList.add("unlocked");
-        }
-        if (userPoints >= 30) {
-            document.getElementById("badge-scholar").classList.add("unlocked");
-        }
-        if (userPoints >= 60) {
-            document.getElementById("badge-master").classList.add("unlocked");
-        }
+        if (userPoints >= 10) document.getElementById("badge-first-step").classList.add("unlocked");
+        if (userPoints >= 30) document.getElementById("badge-scholar").classList.add("unlocked");
+        if (userPoints >= 60) document.getElementById("badge-master").classList.add("unlocked");
     }
 
     function setStep(step) {
         currentStep = step;
-        var cards = document.querySelectorAll(".selection-card");
-        for (var i = 0; i < cards.length; i++) {
-            cards[i].classList.remove("active-step");
-        }
+        document.querySelectorAll(".selection-card").forEach(c => c.classList.remove("active-step"));
+        document.getElementById("step1Indicator").className = "step-item " + (step === 1 ? "active" : step > 1 ? "completed" : "");
+        document.getElementById("step2Indicator").className = "step-item " + (step === 2 || step === 3 ? "active" : step > 3 ? "completed" : "");
+        document.getElementById("step3Indicator").className = "step-item " + (step === 4 ? "active" : "");
 
-        var s1 = document.getElementById("step1Indicator");
-        var s2 = document.getElementById("step2Indicator");
-        var s3 = document.getElementById("step3Indicator");
-
-        s1.className = "step-item " + (step === 1 ? "active" : step > 1 ? "completed" : "");
-        s2.className = "step-item " + (step === 2 || step === 3 ? "active" : step > 3 ? "completed" : "");
-        s3.className = "step-item " + (step === 4 ? "active" : "");
-
-        var title = document.getElementById("selectionTitle");
-        var sub = document.getElementById("selectionSubtitle");
-
-        if (step === 1) {
-            document.getElementById("stageCard").classList.add("active-step");
-            title.textContent = "اختر المرحلة 🎓";
-            sub.textContent = "حدد المرحلة التعليمية المناسبة للطالب.";
-        } else if (step === 2) {
-            document.getElementById("gradeCard").classList.add("active-step");
-            title.textContent = "صفوف المرحلة " + selectedStage + " 📖";
-            sub.textContent = "اختر الصف الدراسي المطلوب للبدء.";
-        } else if (step === 3) {
-            document.getElementById("trackCard").classList.add("active-step");
-            title.textContent = "اختر الشعبة 🧪";
-            sub.textContent = "حدد الشعبة العلمية أو الأدبية.";
-        } else if (step === 4) {
-            document.getElementById("subjectCard").classList.add("active-step");
-            title.textContent = "مواد " + selectedGrade + " 📚";
-            sub.textContent = "اختر المادة للبدء في المذاكرة والمراجعة.";
-        }
+        const title = document.getElementById("selectionTitle"), sub = document.getElementById("selectionSubtitle");
+        if (step === 1) { document.getElementById("stageCard").classList.add("active-step"); title.textContent = "اختر المرحلة 🎓"; sub.textContent = "حدد المرحلة التعليمية المناسبة للطالب."; }
+        else if (step === 2) { document.getElementById("gradeCard").classList.add("active-step"); title.textContent = "صفوف المرحلة " + selectedStage + " 📖"; sub.textContent = "اختر الصف الدراسي."; }
+        else if (step === 3) { document.getElementById("trackCard").classList.add("active-step"); title.textContent = "اختر الشعبة 🧪"; sub.textContent = "حدد الشعبة العلمية أو الأدبية."; }
+        else if (step === 4) { document.getElementById("subjectCard").classList.add("active-step"); title.textContent = "مواد " + selectedGrade + " 📚"; sub.textContent = "اختر المادة للبدء."; }
     }
 
     function handleBack() {
-        if (currentStep === 1) {
-            showScreen('welcomeScreen');
-        } else if (currentStep === 2) {
-            setStep(1);
-        } else if (currentStep === 3) {
-            setStep(2);
-        } else if (currentStep === 4) {
-            if (selectedStage === "ثانوي" && (selectedGrade.indexOf("الثاني") !== -1 || selectedGrade.indexOf("الثالث") !== -1)) {
-                setStep(3);
-            } else {
-                setStep(2);
-            }
-        }
+        if (currentStep === 1) showScreen('welcomeScreen');
+        else if (currentStep === 2) setStep(1);
+        else if (currentStep === 3) setStep(2);
+        else if (currentStep === 4) setStep(selectedStage === "ثانوي" && selectedGrade.includes("الثاني") ? 3 : 2);
     }
-    window.handleBack = handleBack;
 
     function selectStage(stage) {
-        selectedStage = stage;
-        selectedGrade = ""; selectedTrack = ""; selectedSubject = "";
+        selectedStage = stage; selectedGrade = ""; selectedTrack = ""; selectedSubject = "";
+        const grid = document.getElementById("gradeOptions"); grid.innerHTML = "";
+        const grades = stage === "ابتدائي" ? ["الصف الأول الابتدائي", "الصف الثاني الابتدائي", "الصف الثالث الابتدائي", "الصف الرابع الابتدائي", "الصف الخامس الابتدائي", "الصف السادس الابتدائي"] :
+                       stage === "إعدادي" ? ["الصف الأول الإعدادي", "الصف الثاني الإعدادي", "الصف الثالث الإعدادي"] :
+                       ["الصف الأول الثانوي", "الصف الثاني الثانوي", "الصف الثالث الثانوي"];
 
-        var gradeOptions = document.getElementById("gradeOptions");
-        gradeOptions.innerHTML = "";
-
-        var grades = [];
-        if (stage === "ابتدائي") {
-            grades = ["الصف الأول الابتدائي", "الصف الثاني الابتدائي", "الصف الثالث الابتدائي", "الصف الرابع الابتدائي", "الصف الخامس الابتدائي", "الصف السادس الابتدائي"];
-        } else if (stage === "إعدادي") {
-            grades = ["الصف الأول الإعدادي", "الصف الثاني الإعدادي", "الصف الثالث الإعدادي"];
-        } else {
-            grades = ["الصف الأول الثانوي", "الصف الثاني الثانوي", "الصف الثالث الثانوي"];
-        }
-
-        for (var i = 0; i < grades.length; i++) {
-            var g = grades[i];
-            var b = document.createElement("button");
+        grades.forEach(g => {
+            const b = document.createElement("button");
             b.className = "option";
             b.innerHTML = '<div class="option-icon">📖</div><div class="option-content"><span class="option-title">' + g + '</span><span class="option-tag">مناهج وتدريبات حديثة 💡</span></div>';
-            b.onclick = (function(gradeVal) {
-                return function() { selectGrade(gradeVal); };
-            })(g);
-            gradeOptions.appendChild(b);
-        }
-
+            b.onclick = () => selectGrade(g);
+            grid.appendChild(b);
+        });
         setStep(2);
     }
-    window.selectStage = selectStage;
 
     function selectGrade(grade) {
         selectedGrade = grade;
-        if (selectedStage === "ثانوي" && (grade.indexOf("الثاني") !== -1 || grade.indexOf("الثالث") !== -1)) {
-            setStep(3);
-        } else {
-            selectedTrack = "";
-            showSubjects();
-            setStep(4);
-        }
+        if (selectedStage === "ثانوي" && (grade.includes("الثاني") || grade.includes("الثالث"))) setStep(3);
+        else { selectedTrack = ""; showSubjects(); setStep(4); }
     }
-    window.selectGrade = selectGrade;
 
-    function selectTrack(track) {
-        selectedTrack = track;
-        showSubjects();
-        setStep(4);
-    }
-    window.selectTrack = selectTrack;
+    function selectTrack(track) { selectedTrack = track; showSubjects(); setStep(4); }
 
     function showSubjects() {
-        var subjectOptions = document.getElementById("subjectOptions");
-        subjectOptions.innerHTML = "";
+        const grid = document.getElementById("subjectOptions"); grid.innerHTML = [];
+        const subs = selectedStage === "ابتدائي" ? ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "العلوم", "الدراسات الاجتماعية", "التربية الدينية"] :
+                     selectedStage === "إعدادي" ? ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "العلوم", "الدراسات الاجتماعية", "اللغة الفرنسية", "التربية الدينية"] :
+                     selectedGrade.includes("الأول") ? ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "علوم متكاملة", "التاريخ", "الفلسفة", "اللغة الفرنسية", "البرمجة"] :
+                     selectedTrack === "علمي" ? ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "الفيزياء", "الكيمياء", "الأحياء", "اللغة الفرنسية", "البرمجة"] :
+                     ["اللغة العربية", "اللغة الإنجليزية", "التاريخ", "الجغرافيا", "علم النفس والاجتماع", "الفلسفة والمنطق", "اللغة الفرنسية", "البرمجة"];
 
-        var subs = [];
-        if (selectedStage === "ابتدائي") {
-            subs = ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "العلوم", "الدراسات الاجتماعية", "التربية الدينية"];
-        } else if (selectedStage === "إعدادي") {
-            subs = ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "العلوم", "الدراسات الاجتماعية", "اللغة الفرنسية", "التربية الدينية"];
-        } else if (selectedGrade.indexOf("الأول") !== -1) {
-            subs = ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "علوم متكاملة", "التاريخ", "الفلسفة", "اللغة الفرنسية", "اللغة الألمانية", "البرمجة"];
-        } else if (selectedTrack === "علمي") {
-            subs = ["اللغة العربية", "اللغة الإنجليزية", "الرياضيات", "الفيزياء", "الكيمياء", "الأحياء", "اللغة الفرنسية", "اللغة الألمانية", "البرمجة"];
-        } else if (selectedTrack === "أدبي") {
-            subs = ["اللغة العربية", "اللغة الإنجليزية", "التاريخ", "الجغرافيا", "علم النفس والاجتماع", "الفلسفة والمنطق", "اللغة الفرنسية", "اللغة الألمانية", "البرمجة"];
-        }
-
-        for (var i = 0; i < subs.length; i++) {
-            var s = subs[i];
-            var b = document.createElement("button");
+        subs.forEach(s => {
+            const b = document.createElement("button");
             b.className = "option";
             b.innerHTML = '<div class="option-icon">📚</div><div class="option-content"><span class="option-title">' + s + '</span><span class="option-tag">شرح مبسط وتدريبات 🎯</span></div>';
-            b.onclick = (function(subVal) {
-                return function() { selectSubject(subVal); };
-            })(s);
-            subjectOptions.appendChild(b);
-        }
+            b.onclick = () => selectSubject(s);
+            grid.appendChild(b);
+        });
     }
 
-    function selectSubject(sub) {
-        selectedSubject = sub;
-        openChat();
-    }
-    window.selectSubject = selectSubject;
+    function selectSubject(sub) { selectedSubject = sub; openChat(); }
 
     function openChat() {
-        if (!selectedStage || !selectedGrade || !selectedSubject) {
-            return;
-        }
+        if (!selectedStage || !selectedGrade || !selectedSubject) return;
         showScreen("chatScreen");
         document.getElementById("chatInfo").textContent = selectedGrade + " • " + selectedSubject;
         document.getElementById("audioSubjectTitle").textContent = "مراجعات صوتية لـ " + selectedSubject;
-        
-        var searchUrl = "https://www.youtube.com/results?search_query=مراجعة+شرح+" + encodeURIComponent(selectedSubject) + "+" + encodeURIComponent(selectedGrade);
-        document.getElementById("podcastLink").href = searchUrl;
-
+        document.getElementById("podcastLink").href = "https://www.youtube.com/results?search_query=مراجعة+شرح+" + encodeURIComponent(selectedSubject) + "+" + encodeURIComponent(selectedGrade);
         loadChatHistory();
     }
 
     function backToSelection() {
-        stopSpeech();
-        showScreen("selectionScreen");
-        if (selectedSubject) {
-            selectedSubject = "";
-            setStep(4);
-        } else if (selectedTrack) {
-            selectedTrack = "";
-            setStep(3);
-        } else if (selectedGrade) {
-            selectedGrade = "";
-            setStep(2);
-        } else {
-            setStep(1);
-        }
+        stopSpeech(); showScreen("selectionScreen");
+        if (selectedSubject) { selectedSubject = ""; setStep(4); }
+        else if (selectedTrack) { selectedTrack = ""; setStep(3); }
+        else if (selectedGrade) { selectedGrade = ""; setStep(2); }
+        else setStep(1);
     }
-    window.backToSelection = backToSelection;
 
     function buildSystemPrompt() {
-        return "أنت \"المعلم الذكي\"، مساعد تعليمي للمناهج المصرية الحديثة. بيانات الطالب: المرحلة: " + selectedStage + "، الصف: " + selectedGrade + "، الشعبة: " + (selectedTrack || "غير محددة") + "، المادة: " + selectedSubject + ". تنبيه هام جداً: يجب أن تكون جميع الردود والشروحات والحلول باللغة العربية حصراً وبشكل كامل. ممنوع تماماً تقديم أي رد باللغة الإنجليزية أو إجراء ترجمة تلقائية للنصوص. أجب دائماً بالعربية الفصحى البسيطة والواضحة مع تنسيق كل خطوة والاختيارات في أسطر منفصلة وواضحة.";
+        return "أنت \"المعلم الذكي\"، خبير المناهج التعليمية المصرية. بيانات الطالب: المرحلة: " + selectedStage + "، الصف: " + selectedGrade + "، الشعبة: " + (selectedTrack || "عام") + "، المادة: " + selectedSubject + ". " +
+               "قواعد الرد الصارمة: " +
+               "1. أجب باللغة العربية الفصحى الواضحة فقط ودون أي ترجمة إنجليزية نهائياً. " +
+               "2. كن دقيقاً جداً في ربط السؤال بالإجابة الصحيحة وتوضيح السبب علمياً ومنهجياً بدون أي حشو أو تأخير. " +
+               "3. إذا كان السؤال اختيار من متعدد، اكتب السؤال بوضوح، ثم اجعل كل اختيار (أ، ب، ج، د) في سطر مستقل بذاته مع مسافات واضحة، ولا تضع الحل النهائي إلا في النهاية مع الشرح. " +
+               "4. حافظ على تنسيق منظم وراقي ومريح للعين في كل رد.";
     }
 
     async function generateQuiz() {
         if (isSending) return;
-        var quizPrompt = "اكتب اختباراً سريعاً مكوناً من 3 أسئلة اختيار من متعدد في مادة " + selectedSubject + " للصف " + selectedGrade + " باللغة العربية. اجعل كل خيار (أ، ب، ج، د) في سطر مستقل وواضح. ضع الخيارات بشكل منظم ولا تدون الإجابات النموذجية إلا بعد أن يكتمل الاختيار.";
-        var input = document.getElementById("messageInput");
-        input.value = quizPrompt;
+        document.getElementById("messageInput").value = "اكتب لي اختباراً سريعاً من 3 أسئلة اختيار من متعدد في منهج " + selectedSubject + " للصف " + selectedGrade + "، واجعل كل اختيار في سطر منفصل ومنظم للغاية.";
         addPoints(5);
         sendMessage();
     }
-    window.generateQuiz = generateQuiz;
 
     function speakStoredText(index, btnEl) {
-        var text = aiMessagesList[index];
-        if (!text) return;
-        speakText(text, btnEl);
+        if (aiMessagesList[index]) speakText(aiMessagesList[index], btnEl);
     }
-    window.speakStoredText = speakStoredText;
 
     function speakText(text, btnEl) {
         if (!('speechSynthesis' in window)) return;
-
-        if (window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel();
-            if (btnEl) btnEl.innerHTML = "🔊 استمع";
-            return;
-        }
-
-        var cleanText = text.replace(/[*_#`\-]/g, '');
-        var utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.lang = 'ar-SA';
-        utterance.rate = 0.9;
-        utterance.pitch = 1.0;
-
-        utterance.onstart = function() {
-            if (btnEl) btnEl.innerHTML = "⏹️ إيقاف";
-        };
-
-        utterance.onend = function() {
-            if (btnEl) btnEl.innerHTML = "🔊 استمع";
-        };
-
-        utterance.onerror = function() {
-            if (btnEl) btnEl.innerHTML = "🔊 استمع";
-        };
-
-        window.speechSynthesis.speak(utterance);
+        if (window.speechSynthesis.speaking) { window.speechSynthesis.cancel(); if (btnEl) btnEl.innerHTML = "🔊 استمع"; return; }
+        const clean = text.replace(/[*_#`\-]/g, '');
+        const utt = new SpeechSynthesisUtterance(clean);
+        utt.lang = 'ar-SA'; utt.rate = 0.95;
+        utt.onstart = () => { if (btnEl) btnEl.innerHTML = "⏹️ إيقاف"; };
+        utt.onend = utt.onerror = () => { if (btnEl) btnEl.innerHTML = "🔊 استمع"; };
+        window.speechSynthesis.speak(utt);
     }
 
-    function stopSpeech() {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-        }
-    }
-    window.stopSpeech = stopSpeech;
-
-    function exportSummary() {
-        window.print();
-    }
-    window.exportSummary = exportSummary;
-
+    function stopSpeech() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); }
+    function exportSummary() { window.print(); }
     function toggleTheme() {
         document.body.classList.toggle("light-theme");
-        var isLight = document.body.classList.contains("light-theme");
-        localStorage.setItem("smart_teacher_theme", isLight ? "light" : "dark");
-    }
-    window.toggleTheme = toggleTheme;
-
-    function saveNotesToStorage() {
-        localStorage.setItem("smart_teacher_notes", JSON.stringify(notes));
+        localStorage.setItem("smart_teacher_theme", document.body.classList.contains("light-theme") ? "light" : "dark");
     }
 
     function saveChatHistory() {
-        var chatData = {
-            stage: selectedStage,
-            grade: selectedGrade,
-            track: selectedTrack,
-            subject: selectedSubject,
-            conversation: conversation,
-            aiMessagesList: aiMessagesList
-        };
-        localStorage.setItem("smart_teacher_chat_history", JSON.stringify(chatData));
+        localStorage.setItem("smart_teacher_chat_history", JSON.stringify({
+            grade: selectedGrade, subject: selectedSubject, conversation, aiMessagesList
+        }));
     }
 
     function loadChatHistory() {
-        var savedChat = localStorage.getItem("smart_teacher_chat_history");
-        var chatArea = document.getElementById("chatArea");
-        chatArea.innerHTML = "";
-        aiMessagesList = [];
-
-        if (savedChat) {
+        const saved = localStorage.getItem("smart_teacher_chat_history");
+        const chatArea = document.getElementById("chatArea");
+        chatArea.innerHTML = ""; aiMessagesList = [];
+        if (saved) {
             try {
-                var data = JSON.parse(savedChat);
+                const data = JSON.parse(saved);
                 if (data.subject === selectedSubject && data.grade === selectedGrade) {
                     conversation = data.conversation || [{ role: "system", content: buildSystemPrompt() }];
                     aiMessagesList = data.aiMessagesList || [];
-                    
-                    for (var i = 1; i < conversation.length; i++) {
-                        var msg = conversation[i];
-                        if (msg.role === "user") {
-                            addMessageRecord("user", msg.content);
-                        } else if (msg.role === "assistant") {
-                            addMessageRecord("ai", msg.content);
-                        }
+                    for (let i = 1; i < conversation.length; i++) {
+                        addMessageRecord(conversation[i].role === "user" ? "user" : "ai", conversation[i].content);
                     }
                     return;
                 }
-            } catch(e) { console.error(e); }
+            } catch(e) {}
         }
-
         conversation = [{ role: "system", content: buildSystemPrompt() }];
-        addMessageRecord("ai", "👋 أهلاً بيك!\n\nأنا **المعلم الذكي**.\nاخترت مادة ممتازة! تقدر تسألني في أي جزئية مش فاهمها، أو تضغط على **\"🎲 اختبار\"** فوق عشان أختبرك في المادة بسرعة وتكسب نقاط! 📝✨");
+        addMessageRecord("ai", "👋 أهلاً بك يا بطل!\n\nأنا **المعلم الذكي**. اخترت مادة ممتازة! اسألني في أي جزئية مش فاهمها، أو اضغط على **\"🎲 اختبار\"** لنختبر مستواك فوراً! 📝✨");
     }
 
     function loadSavedData() {
-        var savedNotes = localStorage.getItem("smart_teacher_notes");
-        if (savedNotes) {
-            notes = JSON.parse(savedNotes);
-            renderNotes();
-        }
-        var savedPoints = localStorage.getItem("smart_teacher_points");
-        if (savedPoints) {
-            userPoints = parseInt(savedPoints) || 0;
-            document.getElementById("userPoints").textContent = userPoints;
-            checkBadges();
-        }
-        var savedTheme = localStorage.getItem("smart_teacher_theme");
-        if (savedTheme === "light") {
-            document.body.classList.add("light-theme");
-        }
+        const notesData = localStorage.getItem("smart_teacher_notes");
+        if (notesData) { notes = JSON.parse(notesData); renderNotes(); }
+        const pts = localStorage.getItem("smart_teacher_points");
+        if (pts) { userPoints = parseInt(pts) || 0; document.getElementById("userPoints").textContent = userPoints; checkBadges(); }
+        if (localStorage.getItem("smart_teacher_theme") === "light") document.body.classList.add("light-theme");
     }
 
     function toggleAudioBox() { document.getElementById("audioBox").classList.toggle("show"); }
-    window.toggleAudioBox = toggleAudioBox;
-
     function toggleNotes() { document.getElementById("notesBox").classList.toggle("show"); }
-    window.toggleNotes = toggleNotes;
-
     function toggleBadgesBox() { document.getElementById("badgesBox").classList.toggle("show"); }
-    window.toggleBadgesBox = toggleBadgesBox;
 
     function toggleTimer() {
-        var btn = document.getElementById("timerBtn");
-        if (isTimerRunning) {
-            clearInterval(timerInterval);
-            isTimerRunning = false;
-            btn.textContent = "▶️";
-        } else {
-            isTimerRunning = true;
-            btn.textContent = "⏸️";
-            timerInterval = setInterval(function() {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    updateTimerDisplay();
-                } else {
-                    clearInterval(timerInterval);
-                    isTimerRunning = false;
-                    addPoints(10);
-                    btn.textContent = "▶️";
-                }
+        const btn = document.getElementById("timerBtn");
+        if (isTimerRunning) { clearInterval(timerInterval); isTimerRunning = false; btn.textContent = "▶️"; }
+        else {
+            isTimerRunning = true; btn.textContent = "⏸️";
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) { timeLeft--; updateTimerDisplay(); }
+                else { clearInterval(timerInterval); isTimerRunning = false; addPoints(10); btn.textContent = "▶️"; }
             }, 1000);
         }
     }
-    window.toggleTimer = toggleTimer;
 
-    function resetTimer() {
-        clearInterval(timerInterval);
-        isTimerRunning = false;
-        timeLeft = 25 * 60;
-        updateTimerDisplay();
-        document.getElementById("timerBtn").textContent = "▶️";
-    }
-    window.resetTimer = resetTimer;
-
+    function resetTimer() { clearInterval(timerInterval); isTimerRunning = false; timeLeft = 25 * 60; updateTimerDisplay(); document.getElementById("timerBtn").textContent = "▶️"; }
     function updateTimerDisplay() {
-        var m = Math.floor(timeLeft / 60).toString();
-        if (m.length < 2) m = "0" + m;
-        var s = (timeLeft % 60).toString();
-        if (s.length < 2) s = "0" + s;
+        let m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+        let s = (timeLeft % 60).toString().padStart(2, '0');
         document.getElementById("timerDisplay").textContent = m + ":" + s;
     }
 
     function addNote() {
-        var input = document.getElementById("noteInput");
-        var val = input.value.trim();
+        const input = document.getElementById("noteInput");
+        const val = input.value.trim();
         if (!val) return;
-        notes.push(val);
-        input.value = "";
-        saveNotesToStorage();
-        renderNotes();
-        addPoints(2);
+        notes.push(val); input.value = "";
+        localStorage.setItem("smart_teacher_notes", JSON.stringify(notes));
+        renderNotes(); addPoints(2);
     }
-    window.addNote = addNote;
-
-    function removeNote(idx) {
-        notes.splice(idx, 1);
-        saveNotesToStorage();
-        renderNotes();
-    }
-    window.removeNote = removeNote;
-
+    function removeNote(idx) { notes.splice(idx, 1); localStorage.setItem("smart_teacher_notes", JSON.stringify(notes)); renderNotes(); }
     function renderNotes() {
-        var list = document.getElementById("notesList");
-        list.innerHTML = "";
-        for (var i = 0; i < notes.length; i++) {
-            var n = notes[i];
-            var li = document.createElement("li");
+        const list = document.getElementById("notesList"); list.innerHTML = "";
+        notes.forEach((n, i) => {
+            const li = document.createElement("li");
             li.style.cssText = "background: var(--card2); padding: 4px 8px; border-radius: 6px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 12px;";
-            li.innerHTML = "<span>📌 " + n + "</span> <button class=\"btn btn-danger\" style=\"padding: 2px 5px; font-size: 10px;\" onclick=\"removeNote(" + i + ")\">✕</button>";
+            li.innerHTML = '<span>📌 ' + n + '</span> <button class="btn btn-danger" style="padding: 2px 5px; font-size: 10px;" onclick="removeNote(' + i + ')">✕</button>';
             list.appendChild(li);
-        }
+        });
     }
 
     function openCamera() { document.getElementById("cameraInput").click(); }
-    window.openCamera = openCamera;
-
     function openGallery() { document.getElementById("imageInput").click(); }
-    window.openGallery = openGallery;
 
     function handleImage(e) {
-        var file = e.target.files[0];
+        const file = e.target.files[0];
         if (!file) return;
-
-        var reader = new FileReader();
-        reader.onload = function(event) {
-            var img = new Image();
-            img.onload = function() {
-                var canvas = document.createElement('canvas');
-                var MAX_WIDTH = 1000;
-                var MAX_HEIGHT = 1000;
-                var width = img.width;
-                var height = img.height;
-
-                if (width > height) {
-                    if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                    }
-                } else {
-                    if (height > MAX_HEIGHT) {
-                        width *= MAX_HEIGHT / height;
-                        height = MAX_HEIGHT;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                var ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob(function(blob) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let w = img.width, h = img.height;
+                if (w > 800 || h > 800) { if (w > h) { h *= 800 / w; w = 800; } else { w *= 800 / h; h = 800; } }
+                canvas.width = w; canvas.height = h;
+                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                canvas.toBlob((blob) => {
                     selectedImage = new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() });
                     document.getElementById("previewImage").src = URL.createObjectURL(selectedImage);
                     document.getElementById("previewName").textContent = file.name;
                     document.getElementById("imagePreview").classList.add("show");
-                }, 'image/jpeg', 0.8);
+                }, 'image/jpeg', 0.75);
             };
             img.src = event.target.result;
         };
         reader.readAsDataURL(file);
     }
-    window.handleImage = handleImage;
 
     function removeImage() {
         selectedImage = null;
@@ -1663,38 +624,34 @@
         document.getElementById("cameraInput").value = "";
         document.getElementById("imageInput").value = "";
     }
-    window.removeImage = removeImage;
 
     function addMessageRecord(type, content, imgUrl) {
-        var chatArea = document.getElementById("chatArea");
-        var msg = document.createElement("div");
+        const chatArea = document.getElementById("chatArea");
+        const msg = document.createElement("div");
         msg.className = "message " + type;
-        var bubble = document.createElement("div");
+        const bubble = document.createElement("div");
         bubble.className = "bubble";
 
         if (imgUrl) {
-            var img = document.createElement("img");
-            img.src = imgUrl;
-            img.className = "message-image";
+            const img = document.createElement("img");
+            img.src = imgUrl; img.className = "message-image";
             bubble.appendChild(img);
         }
         if (content) {
-            var div = document.createElement("div");
-            div.innerHTML = (type === "ai") ? marked.parse(content) : content;
+            const div = document.createElement("div");
+            div.innerHTML = type === "ai" ? marked.parse(content) : content;
             bubble.appendChild(div);
         }
         msg.appendChild(bubble);
 
         if (type === "ai" && content) {
-            var msgIndex = aiMessagesList.length;
+            const msgIndex = aiMessagesList.length;
             aiMessagesList.push(content);
-
-            var actions = document.createElement("div");
+            const actions = document.createElement("div");
             actions.className = "msg-actions";
             actions.innerHTML = '<button class="action-icon-btn" onclick="speakStoredText(' + msgIndex + ', this)">🔊 استمع</button>';
             msg.appendChild(actions);
         }
-
         chatArea.appendChild(msg);
         chatArea.scrollTop = chatArea.scrollHeight;
     }
@@ -1705,8 +662,8 @@
     }
 
     function addTypingMessage() {
-        var chatArea = document.getElementById("chatArea");
-        var msg = document.createElement("div");
+        const chatArea = document.getElementById("chatArea");
+        const msg = document.createElement("div");
         msg.className = "message ai";
         msg.innerHTML = '<div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
         chatArea.appendChild(msg);
@@ -1715,71 +672,58 @@
     }
 
     function updateAIMessage(el, text) {
-        var bubble = el.querySelector(".bubble");
+        const bubble = el.querySelector(".bubble");
         if (bubble) bubble.innerHTML = marked.parse(text);
-        
-        var actions = el.querySelector(".msg-actions");
+        let actions = el.querySelector(".msg-actions");
         if (!actions && text) {
-            var msgIndex = aiMessagesList.length;
+            const msgIndex = aiMessagesList.length;
             aiMessagesList.push(text);
-
             actions = document.createElement("div");
             actions.className = "msg-actions";
             actions.innerHTML = '<button class="action-icon-btn" onclick="speakStoredText(' + msgIndex + ', this)">🔊 استمع</button>';
             el.appendChild(actions);
-        } else if (actions) {
-            if (aiMessagesList.length > 0) {
-                aiMessagesList[aiMessagesList.length - 1] = text;
-            }
+        } else if (actions && aiMessagesList.length > 0) {
+            aiMessagesList[aiMessagesList.length - 1] = text;
         }
-
-        var chatArea = document.getElementById("chatArea");
-        chatArea.scrollTop = chatArea.scrollHeight;
+        document.getElementById("chatArea").scrollTop = document.getElementById("chatArea").scrollHeight;
     }
 
     async function sendMessage() {
         if (isSending) return;
-        var input = document.getElementById("messageInput");
-        var sendBtn = document.getElementById("sendButton");
-        var text = input.value.trim();
-
+        const input = document.getElementById("messageInput");
+        const sendBtn = document.getElementById("sendButton");
+        const text = input.value.trim();
         if (!text && !selectedImage) return;
 
-        isSending = true;
-        sendBtn.disabled = true;
-
-        var imgUrl = selectedImage ? URL.createObjectURL(selectedImage) : null;
+        isSending = true; sendBtn.disabled = true;
+        const imgUrl = selectedImage ? URL.createObjectURL(selectedImage) : null;
         addMessage("user", text || "📷 صورة للسؤال", imgUrl);
 
         askedQuestionsCount++;
         document.getElementById("questionCount").textContent = askedQuestionsCount;
         addPoints(3);
 
-        var userText = (text || "حلل الصورة واشرح لي السؤال.") + " (يرجى الرد وشرح كل خطوة وترك كل اختيار في سطر مستقل باللغة العربية فقط ودون أي ترجمة إنجليزية)";
-        input.value = "";
-        autoResize(input);
-
-        var imageToSend = selectedImage;
+        const userText = (text || "اشرح السؤال بالتفصيل مع تحديد الاختيار الصحيح بدقة.") + " (أجب باللغة العربية حصراً وبدون أي إنجليزية وبأقصى سرعة وتنظيم)";
+        input.value = ""; autoResize(input);
+        const imageToSend = selectedImage;
         removeImage();
 
-        var typing = addTypingMessage();
-        var aiText = "";
+        const typing = addTypingMessage();
+        let aiText = "";
 
         try {
-            if (typeof puter === 'undefined' || !puter.ai) {
-                throw new Error("Puter AI غير متاح حالياً.");
-            }
+            if (typeof puter === 'undefined' || !puter.ai) throw new Error("Puter AI غير متاح");
 
-            var response;
+            let response;
             if (imageToSend) {
-                response = await puter.ai.chat(userText, imageToSend, { model: "gemini-2.5-flash", stream: true });
+                response = await puter.ai.chat(userText, imageToSend, { model: "gemcin-2.5-flash", stream: true });
             } else {
                 conversation.push({ role: "user", content: userText });
-                response = await puter.ai.chat(conversation, { model: "gemini-2.5-flash", stream: true });
+                response = await puter.ai.chat(conversation, { model: "gemcin-2.5-flash", stream: true });
             }
 
-            for await (var part of response) {
-                var chunk = typeof part === "string" ? part : (part && part.text ? part.text : "");
+            for await (const part of response) {
+                const chunk = typeof part === "string" ? part : (part && part.text ? part.text : "");
                 if (chunk) {
                     aiText += chunk;
                     updateAIMessage(typing, aiText);
@@ -1787,36 +731,23 @@
             }
 
             if (!aiText.trim()) {
-                aiText = "عذراً، لم أستطع الرد. حاول مرة أخرى.";
+                aiText = "عذراً، حدث خطأ بسيط في الاستجابة. حاول مرة أخرى.";
                 updateAIMessage(typing, aiText);
             }
 
             conversation.push({ role: "assistant", content: aiText });
             saveChatHistory();
-
         } catch (err) {
             console.error(err);
-            updateAIMessage(typing, "❌ حدث خطأ في الاتصال بالذكاء الاصطناعي. تأكد من اتصال الإنترنت.");
+            updateAIMessage(typing, "❌ حدث خطأ في الاتصال بالشبكة أو الذكاء الاصطناعي.");
         } finally {
-            isSending = false;
-            sendBtn.disabled = false;
+            isSending = false; sendBtn.disabled = false;
         }
     }
-    window.sendMessage = sendMessage;
 
-    function handleInputKey(e) {
-        if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-        }
-    }
-    window.handleInputKey = handleInputKey;
-
-    function autoResize(ta) {
-        ta.style.height = "auto";
-        ta.style.height = Math.min(ta.scrollHeight, 100) + "px";
-    }
-    window.autoResize = autoResize;
+    function handleInputKey(e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+    function autoResize(ta) { ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight, 100) + "px"; }
 </script>
 </body>
 </html>
+ 
