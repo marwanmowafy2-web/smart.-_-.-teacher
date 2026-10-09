@@ -75,17 +75,17 @@
         }
 
         .welcome-box { 
-            position: relative; z-index: 2; max-width: 650px; width: 100%; padding: 30px 20px; 
+            position: relative; z-index: 2; max-width: 650px; width: 100%; padding: 35px 20px; 
             background: rgba(30, 41, 59, 0.65); backdrop-filter: blur(16px); border-radius: 30px; 
             border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
         }
 
-        .welcome-animation-container { position: relative; width: 100px; height: 100px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }
+        .welcome-animation-container { position: relative; width: 120px; height: 120px; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center; }
         .welcome-pulse-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(16, 185, 129, 0.35); animation: wavePulse 2s infinite ease-out; }
         .welcome-pulse-ring:nth-child(2) { animation-delay: 0.6s; }
-        .animated-logo-box { width: 75px; height: 75px; border-radius: 22px; background: linear-gradient(135deg, var(--main), var(--main-dark)); display: flex; align-items: center; justify-content: center; font-size: 36px; position: relative; z-index: 2; box-shadow: 0 20px 40px rgba(16,185,129,.5); animation: floatLogo 3s infinite ease-in-out; }
+        .animated-logo-box { width: 85px; height: 85px; border-radius: 26px; background: linear-gradient(135deg, var(--main), var(--main-dark)); display: flex; align-items: center; justify-content: center; font-size: 42px; position: relative; z-index: 2; box-shadow: 0 20px 40px rgba(16,185,129,.5); animation: floatLogo 3s infinite ease-in-out; }
         @keyframes wavePulse { 0% { transform: scale(0.95); opacity: 1; } 100% { transform: scale(2.2); opacity: 0; } }
-        @keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
         .title { font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 10px; }
         .subtitle { color: var(--sub); text-align: center; line-height: 1.8; margin-bottom: 20px; font-size: 13px; }
@@ -95,18 +95,12 @@
         .btn-quiz { color: white; background: linear-gradient(135deg, #f59e0b, #d97706); font-size: 14px; padding: 9px 14px; }
         .btn-danger { color: white; background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.25); }
         .btn-external { color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px; padding: 12px; border-radius: 14px; }
+        .btn-install { color: white; background: linear-gradient(135deg, #06b6d4, #3b82f6); font-size: 13px; padding: 10px 18px; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 4px 15px rgba(6,182,212,0.4); margin-bottom: 15px; }
         .full { width: 100%; }
 
-        .welcome-title { font-size: clamp(26px, 7vw, 42px); font-weight: 900; background: linear-gradient(135deg, var(--text), var(--main)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-        .welcome-description { color: var(--sub); font-size: 15px; line-height: 1.8; margin-bottom: 20px; }
-        .status { margin-top: 12px; min-height: 20px; color: var(--sub); font-size: 13px; }
-
-        /* ستايل خانة التقييم */
-        .rating-box { background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border); border-radius: 16px; padding: 12px; margin-top: 15px; text-align: center; }
-        .stars-container { display: flex; justify-content: center; gap: 6px; font-size: 24px; cursor: pointer; margin-bottom: 6px; direction: ltr; }
-        .star { color: #475569; transition: color 0.2s; }
-        .star.selected, .star:hover { color: #f59e0b; }
-        .rating-text { font-size: 12px; color: var(--sub); }
+        .welcome-title { font-size: clamp(30px, 8vw, 50px); font-weight: 900; background: linear-gradient(135deg, var(--text), var(--main)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }
+        .welcome-description { color: var(--sub); font-size: 16px; line-height: 2; margin-bottom: 30px; }
+        .status { margin-top: 18px; min-height: 25px; color: var(--sub); font-size: 14px; }
 
         #selectionScreen { align-items: center; justify-content: center; }
         .selection-box { width: 100%; max-width: 750px; margin: auto; }
@@ -206,6 +200,11 @@
         <div class="bg-blob-2"></div>
 
         <div class="welcome-box">
+            <!-- زر تثبيت بارز يظهر فوراً -->
+            <div>
+                <button id="installWelcomeBtn" class="btn-install" onclick="triggerInstall()">📥 تثبيت تطبيق المعلم الذكي على هاتفك</button>
+            </div>
+
             <div class="welcome-animation-container">
                 <div class="welcome-pulse-ring"></div>
                 <div class="welcome-pulse-ring"></div>
@@ -214,21 +213,7 @@
 
             <div class="welcome-title">المعلم الذكي</div>
             <p class="welcome-description">مساعدك الذكي للمناهج المصرية الحديثة<br>اسأل، صوّر السؤال، اكسب نقاطاً وأوسمة، واستمتع بالمذاكرة.</p>
-            
             <button id="startButton" class="btn btn-primary full" onclick="startApp()">🚀 ابدأ الآن</button>
-
-            <!-- خانة تقييم بـ 5 نجوم -->
-            <div class="rating-box">
-                <div class="stars-container" id="starsContainer">
-                    <span class="star" onclick="rateApp(1)">★</span>
-                    <span class="star" onclick="rateApp(2)">★</span>
-                    <span class="star" onclick="rateApp(3)">★</span>
-                    <span class="star" onclick="rateApp(4)">★</span>
-                    <span class="star" onclick="rateApp(5)">★</span>
-                </div>
-                <div id="ratingText" class="rating-text">قيم تجربتك مع المعلم الذكي ⭐</div>
-            </div>
-
             <div id="status" class="status">جاهز للبدء</div>
         </div>
     </section>
@@ -238,6 +223,7 @@
             <div class="selection-header">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <button id="mainBackBtn" class="btn btn-secondary back-btn" onclick="handleBack()" style="margin-bottom: 0;">⬅️ رجوع للخلف</button>
+                    <button class="btn-install" onclick="triggerInstall()" style="padding: 6px 10px; font-size: 12px; margin-bottom: 0;">📥 تثبيت التطبيق</button>
                 </div>
                 
                 <div class="stepper">
@@ -293,6 +279,7 @@
                 </div>
 
                 <div class="header-actions">
+                    <button class="btn-install" onclick="triggerInstall()" style="padding: 6px 10px; font-size: 11px; margin-bottom: 0;">📥 تثبيت</button>
                     <button class="btn btn-quiz" onclick="generateQuiz()">🎲 اختبار</button>
                     <button class="btn btn-secondary" onclick="toggleDropdown()">⋮</button>
                 </div>
@@ -375,23 +362,24 @@
     var selectedStage = "", selectedGrade = "", selectedTrack = "", selectedSubject = "";
     var currentStep = 1, selectedImage = null, isSending = false, conversation = [], aiMessagesList = [];
     var timerInterval = null, timeLeft = 25 * 60, isTimerRunning = false, notes = [], askedQuestionsCount = 0, userPoints = 0;
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+
+    async function triggerInstall() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+        } else {
+            alert("لتثبيت التطبيق على جهازك:\n1. افتح قائمة المتصفح (النقاط الثلاث أعلى اليسار).\n2. اختر 'إضافة إلى الشاشة الرئيسية' أو 'تثبيت التطبيق'.");
+        }
+    }
 
     window.onload = loadSavedData;
-
-    // دالة تقييم الموقع
-    function rateApp(stars) {
-        const starsElements = document.querySelectorAll('.star');
-        starsElements.forEach((star, index) => {
-            if (index < stars) {
-                star.classList.add('selected');
-            } else {
-                star.classList.remove('selected');
-            }
-        });
-        document.getElementById('ratingText').textContent = "شكراً لتقييمك بـ " + stars + " نجوم! 🌟";
-        localStorage.setItem("smart_teacher_rating", stars);
-        addPoints(5); // مكافأة الطالب بنقاط عند التقييم
-    }
 
     function startApp() { showScreen("selectionScreen"); setStep(1); }
     function toggleDropdown() { document.getElementById("dropdownMenu").classList.toggle("show"); }
@@ -563,7 +551,7 @@
             } catch(e) {}
         }
         conversation = [{ role: "system", content: buildSystemPrompt() }];
-        addMessageRecord("ai", "👋 أهلاً بك يا بطل!\n\nأنا **المعلم الذكي**. اخترت مادة ممتازة! اسألني في أي جزئية مش فاهمها، أو اضغط على **\"🎲 اختبار\"** لنختبر مستваك فوراً! 📝✨");
+        addMessageRecord("ai", "👋 أهلاً بك يا بطل!\n\nأنا **المعلم الذكي**. اخترت مادة ممتازة! اسألني في أي جزئية مش فاهمها، أو اضغط على **\"🎲 اختبار\"** لنختبر مستواك فوراً! 📝✨");
     }
 
     function loadSavedData() {
@@ -572,10 +560,6 @@
         const pts = localStorage.getItem("smart_teacher_points");
         if (pts) { userPoints = parseInt(pts) || 0; document.getElementById("userPoints").textContent = userPoints; checkBadges(); }
         if (localStorage.getItem("smart_teacher_theme") === "light") document.body.classList.add("light-theme");
-        
-        // استرجاع التقييم القديم إن وجد
-        const savedRating = localStorage.getItem("smart_teacher_rating");
-        if (savedRating) { rateApp(parseInt(savedRating)); }
     }
 
     function toggleAudioBox() { document.getElementById("audioBox").classList.toggle("show"); }
